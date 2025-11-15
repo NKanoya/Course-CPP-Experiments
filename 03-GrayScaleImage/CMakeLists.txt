@@ -10,6 +10,8 @@ add_executable(GrayScaleImage
         main.cpp
         src/imread.cpp
         src/image.cpp
+        src/statistics.cpp
+        src/display.cpp
 )
 
 set_target_properties(GrayScaleImage PROPERTIES

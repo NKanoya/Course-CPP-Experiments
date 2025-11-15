@@ -1,8 +1,12 @@
 #include "image.hpp"
 #include "imread.hpp"
+#include "statistics.hpp"
+#include "display.hpp"
+// #include <iostream>
+
+
 
 int main() {
-    GrayScaleImage img;
-    readImage(img, "test.png");
+    imageHistogram("test.png", 10);
     return 0;
 }
