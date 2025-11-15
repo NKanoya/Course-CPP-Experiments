@@ -23,12 +23,30 @@ public:
     GrayScaleImage& operator=(const GrayScaleImage& image) noexcept;
     GrayScaleImage& operator=(GrayScaleImage&& image) noexcept;
 
+    inline std::pair<std::size_t, std::size_t> getSize() const {
+        return {m_width, m_height};
+    }
+
     inline uint8_t& getPixel(unsigned int x, unsigned y) {
         return m_matrix[y * m_height + x];
     }
 
     inline bool empty() const noexcept {
         return m_matrix.empty();
+    }
+
+    template <class Func>
+    void forEach(Func&& func) {
+        for(auto& px: m_matrix) {
+            func(px);
+        }
+    }
+
+    template <class Func>
+    void forEach(Func&& func) const {
+        for(const auto& px: m_matrix) {
+            func(px);
+        }
     }
 };
 
