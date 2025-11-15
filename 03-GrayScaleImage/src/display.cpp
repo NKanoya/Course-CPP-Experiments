@@ -11,7 +11,7 @@ void displayHistogram(const GrayScaleIntervals& intervals) {
         auto begin = current.interval.begin;
         auto end = current.interval.end;
         printf("%d ~ %d", current.interval.begin, current.interval.end);
-        if(begin < 100 && end < 100) {
+        if((begin == 0 && end > 100) || (begin < 100 && end < 100)) {
             printf("\t");
         }
         printf("\t | ");

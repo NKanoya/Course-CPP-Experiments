@@ -4,16 +4,18 @@
 
 #include "statistics.hpp"
 #include <numeric>
+#include <cmath>
 
 static GrayScaleIntervals m_stat;
 static uint8_t m_interval_nums;
-static uint8_t m_step;
+static uint16_t m_step;
 
 static void constructIntervals(uint8_t interval_nums) {
     if(interval_nums == 0) interval_nums = 10;
     m_interval_nums = interval_nums;
     m_stat.resize(m_interval_nums);
-    m_step = static_cast<uint8_t>(256.0 / interval_nums);
+    m_step = static_cast<uint16_t>(256.0 / interval_nums);
+
 
     int current = 0;
     for(int i = 0; i < interval_nums - 1; ++i) {

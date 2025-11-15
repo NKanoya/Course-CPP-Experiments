@@ -7,6 +7,6 @@
 
 
 int main() {
-    imageHistogram("test.png", 10);
+    imageHistogram("test.png", 2);
     return 0;
 }
