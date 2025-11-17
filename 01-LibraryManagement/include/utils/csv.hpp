@@ -24,7 +24,7 @@ public:
     void writeHeader(std::ostream& os) const;
     bool addEntry(std::ostream& os, const std::vector<std::string>& contents) const;
 
-    inline unsigned int rowCount() const noexcept { return m_cols; }
+    inline unsigned int columnCount() const noexcept { return m_cols; }
 };
 
 #endif //LIBRARYMANAGEMENT_CSV_HPP

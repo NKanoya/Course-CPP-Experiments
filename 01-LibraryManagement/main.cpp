@@ -3,8 +3,14 @@
 //
 
 #include <iostream>
+#include "core/book.hpp"
+#include "utils/csv.hpp"
+
+#include "test.hpp"
 
 int main() {
-    std::cout << "Hello World!" << std::endl;
+    Test::csvTest();
+
+    std::cout << std::endl;
     return 0;
 }

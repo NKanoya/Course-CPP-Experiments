@@ -6,6 +6,9 @@ set(CMAKE_CXX_STANDARD 20)
 add_subdirectory(src/book)
 add_subdirectory(src/csv)
 
+# test
+add_subdirectory(test)
+
 add_executable(LibraryManagement
     main.cpp
 )
@@ -13,8 +16,13 @@ add_executable(LibraryManagement
 target_link_libraries(LibraryManagement
         PUBLIC Book
         PUBLIC CSVParserCore
+
+        # test module
+        PUBLIC Test
 )
 
 target_include_directories(LibraryManagement
-    PUBLIC include/
+        PUBLIC include/
+
+        PUBLIC test/
 )
