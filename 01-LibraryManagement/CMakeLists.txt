@@ -10,5 +10,9 @@ add_executable(LibraryManagement
 )
 
 target_link_libraries(LibraryManagement
-    PUBLIC book
+        PUBLIC Book
+)
+
+target_include_directories(LibraryManagement
+    PUBLIC include/
 )
