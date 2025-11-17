@@ -26,7 +26,7 @@ enum class CopyStatus {
 
 struct CopyInfo {
     std::string innerNumber;
-
+    // TODO: fill me
 };
 
 using CopyEntry = std::unique_ptr<CopyInfo>;
@@ -64,5 +64,16 @@ public:
     friend std::ostream& operator<<(std::ostream& os, Book& book) noexcept;
     friend std::istream& operator>>(std::istream& is, Book& book) noexcept;
 };
+
+
+// interaction with streams
+
+// struct BookInfo
+std::ostream& operator<<(std::ostream& os, const BookInfo& bookInfo) noexcept;
+std::istream& operator>>(std::istream& is, const BookInfo& bookInfo) noexcept;
+
+// struct CopyEntry
+std::ostream& operator<<(std::ostream& os, CopyEntry& copyEntry) noexcept;
+std::istream& operator>>(std::istream& is, CopyEntry& copyEntry) noexcept;
 
 #endif //LIBRARYMANAGEMENT_BOOK_HPP
