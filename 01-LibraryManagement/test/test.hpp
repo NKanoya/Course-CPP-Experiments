@@ -6,7 +6,8 @@
 #define LIBRARYMANAGEMENT_TEST_HPP
 
 namespace Test {
-    void csvTest();
+    void csvParserTest();
+    void csvReaderTest();
 }
 
 #endif //LIBRARYMANAGEMENT_TEST_HPP

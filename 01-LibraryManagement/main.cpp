@@ -9,7 +9,7 @@
 #include "test.hpp"
 
 int main() {
-    Test::csvTest();
+    Test::csvReaderTest();
 
     std::cout << std::endl;
     return 0;
