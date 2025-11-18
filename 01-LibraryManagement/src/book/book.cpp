@@ -4,6 +4,8 @@
 
 #include "core/book.hpp"
 
+BookInfo::BookInfo() : m_info() {}
+
 BookInfo::BookInfo(Utils::EntryRange range) {
     if(range.size() != keyCount) {
         m_info[0] = "";
@@ -15,21 +17,23 @@ BookInfo::BookInfo(Utils::EntryRange range) {
     }
 }
 
-const std::string &BookInfo::operator[](BookInfo::BookInfoKeys key) {
+const std::string &BookInfo::operator[](BookInfo::Key key) const noexcept {
     switch (key) {
-        case BookInfoKeys::ISBN:        return m_info[0];
-        case BookInfoKeys::title:       return m_info[1];
-        case BookInfoKeys::author:      return m_info[2];
-        case BookInfoKeys::publisher:   return m_info[3];
-        case BookInfoKeys::year:        return m_info[4];
-        case BookInfoKeys::summary:     return m_info[5];
-        default:                        return "";
+        case Key::ISBN:        return m_info[0];
+        case Key::title:       return m_info[1];
+        case Key::author:      return m_info[2];
+        case Key::publisher:   return m_info[3];
+        case Key::year:        return m_info[4];
+        case Key::summary:     return m_info[5];
+        default:               return "";
     }
 }
 
 Utils::EntryRange BookInfo::getRange() const {
     return Utils::EntryRange(m_info);
 }
+
+
 
 
 Book::Book(Book &&oth) noexcept : m_info(std::move(oth.m_info)) {}

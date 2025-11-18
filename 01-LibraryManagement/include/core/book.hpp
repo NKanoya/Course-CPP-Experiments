@@ -13,7 +13,7 @@
 
 class BookInfo {
 public:
-    enum class BookInfoKeys {
+    enum class Key {
         ISBN,
         title,
         author,
@@ -22,14 +22,15 @@ public:
         summary,
         keyCount_
     };
-    static constexpr std::size_t keyCount = static_cast<std::size_t>(BookInfoKeys::keyCount_);
+    static constexpr std::size_t keyCount = static_cast<std::size_t>(Key::keyCount_);
 private:
     using InfoArrays = std::array<std::string, keyCount>;
     InfoArrays m_info;
 public:
+    BookInfo();
     BookInfo(Utils::EntryRange range);
 
-    const std::string& operator[](BookInfoKeys key);
+    const std::string& operator[](Key key) const noexcept;
     Utils::EntryRange getRange() const;
 
 };
@@ -55,7 +56,7 @@ class Book {
     CopyEntries m_copy;
 public:
     // original Book constructor: construct an empty Book object
-    Book() : m_info({{},{},{},{}, {}, {}}) {}
+    Book() : m_info() {}
 
     Book(BookInfo info, CopyInfo copyInfo);
     Book(BookInfo info, CopyEntries copyInfoEntries);
@@ -70,11 +71,11 @@ public:
     const BookInfo& getInfo() const noexcept;
 
     inline bool valid() const noexcept {
-        return !m_info.ISBN.empty();
+        return !m_info[BookInfo::Key::ISBN].empty();
     }
 
     inline operator bool() const noexcept {
-        return !m_info.ISBN.empty();
+        return !m_info[BookInfo::Key::ISBN].empty();
     }
 
     friend std::ostream& operator<<(std::ostream& os, Book& book) noexcept;
