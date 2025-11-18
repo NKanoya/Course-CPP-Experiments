@@ -18,10 +18,16 @@ namespace Utils {
         PointerRange(std::vector<T> vector) : begin(vector.begin().base()), end(vector.end().base()) {}
 
         template <std::size_t size>
-        PointerRange(std::array<T,size> array) : begin(array.begin().base()), end(array.end().base()) {}
+        PointerRange(std::array<T,size> array) : begin(&array[0]), end(&array[size - 1]) {}
 
         PointerRange(T* array, std::size_t size) : begin(array), end(array + size) {}
+
+        inline std::ptrdiff_t size() const noexcept {
+            return end - begin;
+        }
     };
+
+    using EntryRange = PointerRange<std::string>;
 
 }
 

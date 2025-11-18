@@ -8,14 +8,30 @@
 #include <string>
 #include <vector>
 #include <memory>
+#include <array>
+#include "utils/data_struct.hpp"
 
-struct BookInfo {
-    std::string ISBN;
-    std::string title;
-    std::string author;
-    std::string publisher;
-    std::string year;
-    std::string summary;
+class BookInfo {
+public:
+    enum class BookInfoKeys {
+        ISBN,
+        title,
+        author,
+        publisher,
+        year,
+        summary,
+        keyCount_
+    };
+    static constexpr std::size_t keyCount = static_cast<std::size_t>(BookInfoKeys::keyCount_);
+private:
+    using InfoArrays = std::array<std::string, keyCount>;
+    InfoArrays m_info;
+public:
+    BookInfo(Utils::EntryRange range);
+
+    const std::string& operator[](BookInfoKeys key);
+    Utils::EntryRange getRange() const;
+
 };
 
 enum class CopyStatus {
