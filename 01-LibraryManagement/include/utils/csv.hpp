@@ -17,6 +17,7 @@ namespace Utils {
         std::vector<std::string> m_keys;
         std::size_t m_cols;
     public:
+        explicit CSVWriter(std::size_t columnCount);
         explicit CSVWriter(std::vector<std::string> m_keys);
 
         CSVWriter(const CSVWriter& oth) = delete;

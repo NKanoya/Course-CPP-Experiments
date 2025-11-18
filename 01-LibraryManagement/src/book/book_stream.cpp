@@ -10,12 +10,12 @@ std::ostream& operator<<(std::ostream& os, const BookInfo& bookInfo) noexcept {
 
 
 
-std::istream& operator>>(std::istream& os, const BookInfo& bookInfo) noexcept {
+std::istream& operator>>(std::istream& os, BookInfo& bookInfo) noexcept {
 
 }
 
 
-std::ostream& operator<<(std::ostream& os, CopyEntry& copyEntry) noexcept {
+std::ostream& operator<<(std::ostream& os, const CopyEntry& copyEntry) noexcept {
 
 }
 

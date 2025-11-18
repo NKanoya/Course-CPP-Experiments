@@ -6,6 +6,12 @@
 #include <iostream>
 
 namespace Utils {
+    CSVWriter::CSVWriter(std::size_t columnCount) : m_cols(columnCount), m_keys(columnCount) {
+        for(int i = 0; i < m_cols; ++i) {
+            m_keys[i] = std::to_string(i);
+        }
+    }
+
     CSVWriter::CSVWriter(std::vector<std::string> keys)
             : m_keys(std::move(keys)), m_cols(m_keys.size()) {}
 

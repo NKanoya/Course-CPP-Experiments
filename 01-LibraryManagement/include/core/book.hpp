@@ -70,10 +70,10 @@ public:
 
 // struct BookInfo
 std::ostream& operator<<(std::ostream& os, const BookInfo& bookInfo) noexcept;
-std::istream& operator>>(std::istream& is, const BookInfo& bookInfo) noexcept;
+std::istream& operator>>(std::istream& is, BookInfo& bookInfo) noexcept;
 
 // struct CopyEntry
-std::ostream& operator<<(std::ostream& os, CopyEntry& copyEntry) noexcept;
+std::ostream& operator<<(std::ostream& os, const CopyEntry& copyEntry) noexcept;
 std::istream& operator>>(std::istream& is, CopyEntry& copyEntry) noexcept;
 
 #endif //LIBRARYMANAGEMENT_BOOK_HPP
