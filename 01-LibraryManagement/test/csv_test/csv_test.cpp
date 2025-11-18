@@ -19,7 +19,7 @@ namespace Test {
         CSVWriter parser(keys);
 
         // output the column count
-        std::cout << "Column:" << parser.columnCount() << '\n';
+        std::cout << "Column:" << parser.readColumnCount() << '\n';
 
         // output the header
         parser.writeHeader(std::cout);

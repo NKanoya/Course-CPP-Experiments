@@ -30,7 +30,7 @@ namespace Utils {
 
         void newKeys(std::vector<std::string> keys) noexcept;
         const std::vector<std::string>& readKeys() const noexcept { return m_keys; }
-        inline const std::size_t& readColumnCount() noexcept { return m_cols; }
+        inline const std::size_t& readColumnCount() const noexcept { return m_cols; }
     };
 
     class CSVReader {
@@ -56,7 +56,7 @@ namespace Utils {
         }
 
         inline std::size_t& getColumnCount() noexcept { return m_cols; }
-        inline const std::size_t& readColumnCount() noexcept { return m_cols; }
+        inline const std::size_t& readColumnCount() const noexcept { return m_cols; }
 
     };
 

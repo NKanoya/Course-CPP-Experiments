@@ -141,6 +141,6 @@ namespace Utils {
         m_cols = commaCount + 1;
     }
 
-    CSVReader::CSVReader(const CSVWriter &writer) : m_cols(writer.columnCount()) {}
+    CSVReader::CSVReader(const CSVWriter &writer) : m_cols(writer.readColumnCount()) {}
 
 }
