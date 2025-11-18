@@ -15,7 +15,7 @@ add_executable(LibraryManagement
 
 target_link_libraries(LibraryManagement
         PUBLIC Book
-        PUBLIC CSVParserCore
+        PUBLIC CSVParser
 
         # test module
         PUBLIC Test

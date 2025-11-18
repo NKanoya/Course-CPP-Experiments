@@ -12,11 +12,11 @@ namespace Test {
 
     using namespace Utils;
 
-    void csvParserTest() {
+    void CSVWriterTest() {
         // list of keys
         std::vector<std::string> keys = {"ISBN", "Title", "Author", "Publisher", "Year", "Summary"};
         // use the keys to construct a CSV Parser
-        CSVParser parser(keys);
+        CSVWriter parser(keys);
 
         // output the column count
         std::cout << "Column:" << parser.columnCount() << '\n';

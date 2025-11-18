@@ -13,16 +13,16 @@
 
 namespace Utils {
 
-    class CSVParser {
+    class CSVWriter {
         std::vector<std::string> m_keys;
         unsigned int m_cols;
     public:
-        explicit CSVParser(std::vector<std::string> m_keys);
+        explicit CSVWriter(std::vector<std::string> m_keys);
 
-        CSVParser(const CSVParser& oth) = delete;
-        CSVParser& operator=(const CSVParser& oth) = delete;
-        CSVParser(CSVParser&& oth) = delete;
-        CSVParser& operator=(CSVParser&& oth) = delete;
+        CSVWriter(const CSVWriter& oth) = delete;
+        CSVWriter& operator=(const CSVWriter& oth) = delete;
+        CSVWriter(CSVWriter&& oth) = delete;
+        CSVWriter& operator=(CSVWriter&& oth) = delete;
 
         void writeHeader(std::ostream& os) const;
         bool addEntry(std::ostream& os, const std::vector<std::string>& contents) const;
@@ -33,15 +33,15 @@ namespace Utils {
     class CSVReader {
         std::size_t m_cols;
     public:
-        CSVReader(std::size_t columnCount) : m_cols(columnCount) {}
-        CSVReader(std::istream& is);
+        explicit CSVReader(std::size_t columnCount) : m_cols(columnCount) {}
+        explicit CSVReader(std::istream& is);
 
         CSVReader(const CSVReader& oth) = delete;
         CSVReader& operator=(const CSVReader& oth) = delete;
         CSVReader(CSVReader&& oth) = delete;
         CSVReader& operator=(CSVReader&& oth) = delete;
 
-        bool readLine(std::istream &is, const std::vector<std::string *> &inputList);
+        bool readLine(std::istream &is, const std::vector<std::string *> &inputList) const;
 
         inline bool valid() const noexcept {
             return m_cols;

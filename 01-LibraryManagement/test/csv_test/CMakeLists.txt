@@ -8,5 +8,5 @@ target_include_directories(CSVTest
 )
 
 target_link_libraries(CSVTest
-        PUBLIC CSVParserCore
+        PUBLIC CSVParser
 )
