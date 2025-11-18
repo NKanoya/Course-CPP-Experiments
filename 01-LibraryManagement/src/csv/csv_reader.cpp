@@ -4,6 +4,7 @@
 
 #include "utils/csv.hpp"
 #include <iostream>
+#include <algorithm>
 
 namespace Utils {
 
@@ -123,4 +124,23 @@ namespace Utils {
         return true;
 
     }
+
+    CSVReader::CSVReader(std::istream &is) {
+        std::string line;
+        getline(is, line);
+
+        // if there exists `"` in the line, the line is not the heading
+        if(std::find(line.begin(),line.end(),'\"') != line.end()) {
+            // construct a invalid reader object
+            m_cols = 0;
+            return;
+        }
+
+        // if it's the heading, count the number of commas
+        auto commaCount = std::count(line.begin(), line.end(), ',');
+        m_cols = commaCount + 1;
+    }
+
+    CSVReader::CSVReader(const CSVWriter &writer) : m_cols(writer.columnCount()) {}
+
 }

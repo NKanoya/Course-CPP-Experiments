@@ -59,5 +59,10 @@ namespace Utils {
         return (bool) os;
     }
 
+    void CSVWriter::newKeys(std::vector<std::string> keys) noexcept {
+        m_keys = std::move(keys);
+        m_cols = m_keys.size();
+    }
+
 }
 

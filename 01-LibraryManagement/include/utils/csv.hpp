@@ -15,7 +15,7 @@ namespace Utils {
 
     class CSVWriter {
         std::vector<std::string> m_keys;
-        unsigned int m_cols;
+        std::size_t m_cols;
     public:
         explicit CSVWriter(std::vector<std::string> m_keys);
 
@@ -27,7 +27,9 @@ namespace Utils {
         void writeHeader(std::ostream& os) const;
         bool addEntry(std::ostream& os, const std::vector<std::string>& contents) const;
 
-        inline unsigned int columnCount() const noexcept { return m_cols; }
+        void newKeys(std::vector<std::string> keys) noexcept;
+        const std::vector<std::string>& readKeys() const noexcept { return m_keys; }
+        inline const std::size_t& readColumnCount() noexcept { return m_cols; }
     };
 
     class CSVReader {
@@ -35,6 +37,7 @@ namespace Utils {
     public:
         explicit CSVReader(std::size_t columnCount) : m_cols(columnCount) {}
         explicit CSVReader(std::istream& is);
+        explicit CSVReader(const CSVWriter& writer);
 
         CSVReader(const CSVReader& oth) = delete;
         CSVReader& operator=(const CSVReader& oth) = delete;
@@ -50,6 +53,9 @@ namespace Utils {
         inline operator bool() const noexcept {
             return m_cols;
         }
+
+        inline std::size_t& getColumnCount() noexcept { return m_cols; }
+        inline const std::size_t& readColumnCount() noexcept { return m_cols; }
 
     };
 
