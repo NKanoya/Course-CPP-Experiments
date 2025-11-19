@@ -9,6 +9,7 @@
 #include <array>
 #include <string>
 #include <stdexcept>
+#include <iostream>
 
 namespace Utils {
 
@@ -31,22 +32,23 @@ namespace Utils {
 
     using EntryRange = PointerRange<std::string>;
 
-    template <class T_, std::size_t arraySize_>
-    struct isMainKeyExists {
-        bool operator() (const std::array<T_ ,arraySize_>& arr) {
-            return arr[0].empty;
+    template <class Array>
+    struct DoMainKeyExist {
+        inline bool operator() (const Array& arr) const {
+            return !arr[0].empty();
         }
     };
 
+
     template <class T_,
               class EnumClass_,
-              class ValidChecker_ = isMainKeyExists<T_, static_cast<std::size_t>(EnumClass_::COUNT)> >
+              class ValidChecker_ = DoMainKeyExist<std::array<T_, static_cast<std::size_t>(EnumClass_::COUNT)>> >
     class InfoEntry {
     public:
         using Key = EnumClass_;
         static constexpr std::size_t KEYCOUNT = static_cast<std::size_t>(Key::COUNT);
         static_assert(KEYCOUNT > 0, "The number of key should be at least 1!");
-        static ValidChecker_ checker;
+        static const ValidChecker_ checker;
 
         struct UseCopyTag {};
         struct UseMoveTag {};
@@ -74,9 +76,13 @@ namespace Utils {
         }
 
         inline operator bool() const {
-            return check(m_arr);
+            return checker(m_arr);
         }
     };
+
+    // static member
+    template<class T_, class EnumClass_, class ValidChecker_>
+    const ValidChecker_ InfoEntry<T_, EnumClass_, ValidChecker_>::checker = {};
 
     template<class T_, class EnumClass_, class ValidChecker_>
     InfoEntry<T_, EnumClass_, ValidChecker_>::
@@ -110,6 +116,8 @@ namespace Utils {
         // move the elements to inner array
         for(int i = 0; i < KEYCOUNT; ++i) {
             m_arr[i] = std::move(pointerRange.begin[i]);
+
+            std::cout << pointerRange.begin[i];
         }
     }
 
