@@ -61,6 +61,34 @@ void Test::infoEntryTest() {
 
     //////////////////////////////////////////////////////////////////
     std::cout << Test::separation;
+    std::cout << "Get the inner range of an entry, and use it to traverse the entry:\n\n";
+
+    auto obj2Range = obj2.getRange();
+
+    for(int i = 0; i < obj2Range.size(); ++i) {
+        std::cout << i << "  | " << obj2Range.begin[i] << "\n";
+    }
+
+    //////////////////////////////////////////////////////////////////
+    std::cout << Test::separation;
+
+    std::cout << "Test if the out of range execption from `at()` method is correctly thrown:";
+    std::cout << std::endl;
+
+    try {
+        obj2.at(TestedEntry::Key::COUNT);
+    } catch (std::exception& e) {
+        std::cout << e.what() << '\n';
+    }
+
+    try {
+        obj2.at(static_cast<TestedEntry::Key>(100));
+    } catch (std::exception& e) {
+        std::cout << e.what() << '\n';
+    }
+
+    //////////////////////////////////////////////////////////////////
+    std::cout << Test::separation;
     std::cout << "Use incompatible size (too few elements) of range to create object obj3:\n";
 
     std::array<std::string, 2> too_few_strings = {"Main", "Value1"};
@@ -77,23 +105,7 @@ void Test::infoEntryTest() {
     TestedEntry obj4(range_too_many);
     std::cout << "Is obj4 valid: " << obj4.valid() << '\n';
 
-    //////////////////////////////////////////////////////////////////
-    std::cout << Test::separation;
 
-    std::cout << "Test if the out of range execption from `at()` method is correctly thrown:";
-    std::cout << std::endl;
-
-    try {
-        obj2.at(TestedEntry::Key::COUNT);
-    } catch (std::exception& e) {
-        std::cerr << e.what() << '\n';
-    }
-
-    try {
-        obj2.at(static_cast<TestedEntry::Key>(100));
-    } catch (std::exception& e) {
-        std::cerr << e.what() << '\n';
-    }
 
 
 
