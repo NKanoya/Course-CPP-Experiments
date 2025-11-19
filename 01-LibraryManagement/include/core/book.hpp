@@ -41,47 +41,57 @@ namespace {
 using CopyInfo = Utils::InfoEntry<std::string, BookInfoKey_>;
 
 
-//class Book {
-//    BookInfo m_info;
-//
-//    CopyEntries m_copy;
-//public:
-//    // original Book constructor: construct an empty Book object
-//    Book() : m_info() {}
-//
-//    Book(BookInfo info, CopyInfo copyInfo);
-//    Book(BookInfo info, CopyEntries copyInfoEntries);
-//
-//    Book(const Book& oth) = delete;
-//    Book& operator=(const Book& oth) = delete;
-//
-//    Book(Book&& oth) noexcept;
-//    Book& operator=(Book&& oth) noexcept;
-//
-//    BookInfo& getInfo() noexcept;
-//    const BookInfo& getInfo() const noexcept;
-//
-//    inline bool valid() const noexcept {
-//        return !m_info[BookInfo::Key::ISBN].empty();
-//    }
-//
-//    inline operator bool() const noexcept {
-//        return !m_info[BookInfo::Key::ISBN].empty();
-//    }
-//
-//    friend std::ostream& operator<<(std::ostream& os, Book& book) noexcept;
-//    friend std::istream& operator>>(std::istream& is, Book& book) noexcept;
-//};
-//
-//
-//// interaction with streams
-//
-//// struct BookInfo
-//std::ostream& operator<<(std::ostream& os, const BookInfo& bookInfo) noexcept;
-//std::istream& operator>>(std::istream& is, BookInfo& bookInfo) noexcept;
-//
-//// struct CopyEntry
-//std::ostream& operator<<(std::ostream& os, const CopyEntry& copyEntry) noexcept;
-//std::istream& operator>>(std::istream& is, CopyEntry& copyEntry) noexcept;
+class Book {
+    using CopyEntries = std::vector<std::unique_ptr<CopyInfo>>;
+    BookInfo m_info;
+
+    CopyEntries m_copyPointers;
+public:
+    // original Book constructor: construct an empty Book object
+    Book() : m_info(), m_copyPointers() {}
+
+    Book(BookInfo info, CopyInfo copyInfo);
+    Book(BookInfo info, CopyEntries copyInfoEntries);
+
+    Book(const Book& oth) = delete;
+    Book& operator=(const Book& oth) = delete;
+
+    Book(Book&& oth) noexcept;
+    Book& operator=(Book&& oth) noexcept;
+
+    inline BookInfo& setInfo() noexcept {
+        return m_info;
+    }
+
+    const BookInfo& readInfo() const noexcept {
+        return m_info;
+    }
+
+    inline bool valid() const noexcept {
+        return m_info.valid() && !m_copyPointers.empty();
+    }
+
+    inline operator bool() const noexcept {
+        return m_info.valid() && !m_copyPointers.empty();
+    }
+
+    inline std::size_t copyCount() const noexcept {
+        return m_copyPointers.size();
+    }
+
+    friend std::ostream& operator<<(std::ostream& os, Book& book) noexcept;
+    friend std::istream& operator>>(std::istream& is, Book& book) noexcept;
+};
+
+
+// interaction with streams
+
+// struct BookInfo
+std::ostream& operator<<(std::ostream& os, const BookInfo& bookInfo) noexcept;
+std::istream& operator>>(std::istream& is, BookInfo& bookInfo) noexcept;
+
+// struct CopyEntry
+std::ostream& operator<<(std::ostream& os, const CopyInfo& copyEntry) noexcept;
+std::istream& operator>>(std::istream& is, CopyInfo& copyEntry) noexcept;
 
 #endif //LIBRARYMANAGEMENT_BOOK_HPP

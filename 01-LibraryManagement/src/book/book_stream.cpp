@@ -22,3 +22,4 @@ std::istream& operator>>(std::istream& os, BookInfo& bookInfo) noexcept {
 //std::istream& operator>>(std::istream& is, CopyEntry& copyEntry) noexcept {
 //
 //}
+
