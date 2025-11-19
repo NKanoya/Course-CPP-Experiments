@@ -11,43 +11,34 @@
 #include <array>
 #include "utils/data_struct.hpp"
 
-class BookInfo {
-public:
-    enum class Key {
+
+// internal enum
+namespace {
+    enum class BookInfoKey_ {
         ISBN,
-        title,
-        author,
-        publisher,
-        year,
-        summary,
-        keyCount_
+        TITLE,
+        AUTHOR,
+        PUBLISHER,
+        YEAR,
+        SUMMARY,
+        COUNT
     };
-    static constexpr std::size_t keyCount = static_cast<std::size_t>(Key::keyCount_);
-private:
-    using InfoArrays = std::array<std::string, keyCount>;
-    InfoArrays m_info;
-public:
-    BookInfo();
-    BookInfo(Utils::EntryRange range);
+}
 
-    const std::string& operator[](Key key) const noexcept;
-    Utils::EntryRange getRange() const;
+using BookInfo = Utils::InfoEntry<std::string, BookInfoKey_>;
 
-};
+// internal enum
+namespace {
+    enum class CopyInfoKey_ {
+        IDENTIFIER_CODE,
+        ISBN,
+        STATUS,
+        BORROWER_CODE,
+        COUNT
+    };
+}
 
-enum class CopyStatus {
-    available,
-    borrowed,
-    onLoan
-};
-
-struct CopyInfo {
-    std::string innerNumber;
-    // TODO: fill me
-};
-
-using CopyEntry = std::unique_ptr<CopyInfo>;
-using CopyEntries = std::vector<CopyEntry>;
+using CopyInfo = Utils::InfoEntry<std::string, BookInfoKey_>;
 
 
 class Book {
