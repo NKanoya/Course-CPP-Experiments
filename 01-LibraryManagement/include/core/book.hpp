@@ -21,7 +21,7 @@ namespace {
         PUBLISHER,
         YEAR,
         SUMMARY,
-        COUNT
+        KEY_COUNT
     };
 }
 
@@ -34,7 +34,7 @@ namespace {
         ISBN,
         STATUS,
         BORROWER_CODE,
-        COUNT
+        KEY_COUNT
     };
 }
 

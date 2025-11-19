@@ -57,10 +57,10 @@ template<class T_, class EnumClass_, class ValidChecker_>
 T_& InfoEntry<T_, EnumClass_, ValidChecker_>::
 at(InfoEntry<T_, EnumClass_, ValidChecker_>::Key key) {
     auto index = static_cast<std::size_t>(key);
-    if(key >= Key::COUNT) {
-        if(key == Key::COUNT) {
-            // use Key::COUNT as key
-            throw std::out_of_range("Out of range! DO NOT use Key::COUNT as key!");
+    if(key >= Key::KEY_COUNT) {
+        if(key == Key::KEY_COUNT) {
+            // use Key::KEY_COUNT as key
+            throw std::out_of_range("Out of range! DO NOT use Key::KEY_COUNT as key!");
         }
         throw std::out_of_range("Out of range! Invalid Key!");
     }
@@ -71,10 +71,10 @@ template<class T_, class EnumClass_, class ValidChecker_>
 const T_& InfoEntry<T_, EnumClass_, ValidChecker_>::
 at(InfoEntry<T_, EnumClass_, ValidChecker_>::Key key) const {
     auto index = static_cast<std::size_t>(key);
-    if(key >= Key::COUNT) {
-        if(key == Key::COUNT) {
-            // use Key::COUNT as key
-            throw std::out_of_range("Out of range! DO NOT use Key::COUNT as key!");
+    if(key >= Key::KEY_COUNT) {
+        if(key == Key::KEY_COUNT) {
+            // use Key::KEY_COUNT as key
+            throw std::out_of_range("Out of range! DO NOT use Key::KEY_COUNT as key!");
         }
         throw std::out_of_range("Out of range! Invalid Key!");
     }

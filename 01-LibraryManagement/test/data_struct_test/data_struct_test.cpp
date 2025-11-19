@@ -17,7 +17,7 @@ void Test::infoEntryTest() {
         MAIN_KEY,
         PROPERTY_1,
         PROPERTY_2,
-        COUNT
+        KEY_COUNT
     };
 
     using TestedEntry = InfoEntry<std::string, TempEnum>;
@@ -76,7 +76,7 @@ void Test::infoEntryTest() {
     std::cout << std::endl;
 
     try {
-        obj2.at(TestedEntry::Key::COUNT);
+        obj2.at(TestedEntry::Key::KEY_COUNT);
     } catch (std::exception& e) {
         std::cout << e.what() << '\n';
     }
