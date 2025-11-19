@@ -28,12 +28,19 @@ namespace Utils {
         T* begin;
         T* end;
 
-        PointerRange(std::vector<T>& vector) : begin(&vector[0]), end(begin + vector.size()) {}
+        explicit PointerRange(std::vector<T>& vector) : begin(&vector[0]), end(begin + vector.size()) {}
 
         template <std::size_t size>
-        PointerRange(std::array<T,size>& array) : begin(&array[0]), end(begin + size) {}
+        explicit PointerRange(std::array<T,size>& array) : begin(&array[0]), end(begin + size) {}
 
-        PointerRange(T* array, std::size_t size) : begin(array), end(array + size) {}
+        explicit PointerRange(T* array, std::size_t size) : begin(array), end(array + size) {}
+
+        static PointerRange<T> makePointerRange(std::vector<T>& vector);
+
+        template <std::size_t arraySize>
+        static PointerRange<T> makePointerRange(std::array<T, arraySize>& array);
+
+        static PointerRange<T> makePointerRange(T* array, std::size_t size);
 
         inline std::ptrdiff_t size() const noexcept {
             return end - begin;
@@ -243,8 +250,12 @@ namespace Utils {
         }
     };
 
+}
+
+#include "impl/pointer_range.tpp"
+
 #include "impl/info_entry.tpp"
 
-}
+
 
 #endif //LIBRARYMANAGEMENT_DATA_STRUCT_HPP
