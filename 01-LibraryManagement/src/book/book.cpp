@@ -29,9 +29,9 @@ const std::string &BookInfo::operator[](BookInfo::Key key) const noexcept {
     }
 }
 
-Utils::EntryRange BookInfo::getRange() const {
-    return Utils::EntryRange(m_info);
-}
+//Utils::EntryRange BookInfo::getRange() const {
+//    return Utils::EntryRange(m_info);
+//}
 
 
 

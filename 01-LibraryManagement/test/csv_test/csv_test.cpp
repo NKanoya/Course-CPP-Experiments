@@ -68,8 +68,6 @@ namespace Test {
         CSVReader reader(5);      // construct reader line
         bool readingState;
 
-        const char * const separation = "=====================================================\n";
-
         ///////////////////////////////////////////////////////////////////////
         // test1: read a normal list of 5 columns
         std::string line1 = R"("str1","str2","str3","str4","str5")";       // raw line
