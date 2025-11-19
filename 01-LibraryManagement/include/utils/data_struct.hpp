@@ -17,10 +17,10 @@ namespace Utils {
         T* begin;
         T* end;
 
-        PointerRange(std::vector<T> vector) : begin(vector.begin().base()), end(vector.end().base()) {}
+        PointerRange(std::vector<T>& vector) : begin(&vector[0]), end(begin + vector.size()) {}
 
         template <std::size_t size>
-        PointerRange(std::array<T,size> array) : begin(&array[0]), end(&array[size - 1]) {}
+        PointerRange(std::array<T,size>& array) : begin(&array[0]), end(begin + size) {}
 
         PointerRange(T* array, std::size_t size) : begin(array), end(array + size) {}
 
