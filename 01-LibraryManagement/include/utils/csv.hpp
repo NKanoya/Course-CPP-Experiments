@@ -9,6 +9,7 @@
 #include <vector>
 #include <string>
 #include <iostream>
+#include "utils/data_struct.hpp"
 
 
 namespace Utils {
@@ -25,10 +26,12 @@ namespace Utils {
         CSVWriter(CSVWriter&& oth) = delete;
         CSVWriter& operator=(CSVWriter&& oth) = delete;
 
-        void writeHeader(std::ostream& os) const;
-        bool addEntry(std::ostream& os, const std::vector<std::string>& contents) const;
+        using StringsRange = Utils::PointerRange<std::string>;
 
-        void newKeys(std::vector<std::string> keys) noexcept;
+        void writeHeader(std::ostream& os) const;
+        bool addEntry(std::ostream& os, StringsRange contents) const;
+
+        bool newKeys(StringsRange keys) noexcept;
         const std::vector<std::string>& readKeys() const noexcept { return m_keys; }
         inline const std::size_t& readColumnCount() const noexcept { return m_cols; }
     };
@@ -45,7 +48,9 @@ namespace Utils {
         CSVReader(CSVReader&& oth) = delete;
         CSVReader& operator=(CSVReader&& oth) = delete;
 
-        bool readLine(std::istream &is, const std::vector<std::string *> &inputList) const;
+        using StringsRange = Utils::PointerRange<std::string>;
+
+        bool readLine(std::istream &is, StringsRange inputList) const;
 
         inline bool valid() const noexcept {
             return m_cols;

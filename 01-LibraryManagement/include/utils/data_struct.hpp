@@ -35,17 +35,19 @@ namespace Utils {
 
         explicit PointerRange(T* array, std::size_t size) : begin(array), end(array + size) {}
 
-        static PointerRange<T> makePointerRange(std::vector<T>& vector);
-
-        template <std::size_t arraySize>
-        static PointerRange<T> makePointerRange(std::array<T, arraySize>& array);
-
-        static PointerRange<T> makePointerRange(T* array, std::size_t size);
-
         inline std::ptrdiff_t size() const noexcept {
             return end - begin;
         }
     };
+
+    template <class T>
+    PointerRange<T> makePointerRange(std::vector<T>& vector);
+
+    template <class T, std::size_t arraySize>
+    PointerRange<T> makePointerRange(std::array<T, arraySize>& array);
+
+    template <class T>
+    PointerRange<T> makePointerRange(T* array, std::size_t size);
 
     using EntryRange = PointerRange<std::string>;
 

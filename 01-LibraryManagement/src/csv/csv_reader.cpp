@@ -97,7 +97,7 @@ namespace Utils {
     }
 
 
-    bool CSVReader::readLine(std::istream &is, const std::vector<std::string *> &inputList) const {
+    bool CSVReader::readLine(std::istream &is, StringsRange inputList) const {
 
         if(inputList.size() != m_cols) {
             return false;
@@ -118,7 +118,7 @@ namespace Utils {
         }
 
         for(int i = 0; i < m_cols; ++i) {
-            *(inputList[i]) = strings[i];
+            inputList.begin[i] = strings[i];
         }
 
         return true;

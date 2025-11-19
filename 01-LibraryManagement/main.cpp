@@ -9,7 +9,8 @@
 #include "test.hpp"
 
 int main() {
-    Test::infoEntryTest();
+    Test::CSVWriterTest();
+    Test::csvReaderTest();
 
     std::cout << std::endl;
     return 0;

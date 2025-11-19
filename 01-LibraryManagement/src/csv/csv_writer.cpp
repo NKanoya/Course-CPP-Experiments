@@ -26,10 +26,10 @@ namespace Utils {
     }
 
     static void outputEscapeString(std::ostream &os,
-                                   const std::vector<std::string> &contents,
-                                   decltype(contents.end()) endIt) {
+                                   CSVWriter::StringsRange& contents,
+                                   std::string* endIt) {
         // traverse assigned strings
-        for (auto it = contents.begin(); it != endIt; ++it) {
+        for (auto it = contents.begin; it != endIt; ++it) {
             os << '"';                 // beginning quotation mark
             for (auto &ch: *it) {
                 if (ch == '\"') {
@@ -47,10 +47,10 @@ namespace Utils {
         }
     }
 
-    bool CSVWriter::addEntry(std::ostream &os, const std::vector<std::string> &contents) const {
-        auto endIt = contents.end();
+    bool CSVWriter::addEntry(std::ostream &os, StringsRange contents) const {
+        auto endIt = contents.end;
         if (contents.size() >= m_cols) {
-            endIt = contents.begin() + m_cols;
+            endIt = contents.begin + m_cols;
             outputEscapeString(os, contents, endIt);
         } else {
             std::size_t absentColumnNumber = m_cols - contents.size();
@@ -65,9 +65,18 @@ namespace Utils {
         return (bool) os;
     }
 
-    void CSVWriter::newKeys(std::vector<std::string> keys) noexcept {
-        m_keys = std::move(keys);
+    bool CSVWriter::newKeys(StringsRange keys) noexcept {
+        // incompatible count of keys
+        if(keys.size() == m_cols) {
+            return false;
+        }
+
+        for(auto i = 0; i < m_cols; ++i) {
+            m_keys[i] = keys.begin[i];
+        }
         m_cols = m_keys.size();
+
+        return true;
     }
 
 }
