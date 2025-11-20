@@ -29,7 +29,7 @@ namespace Utils {
                                    CSVWriter::StringsRange& contents,
                                    std::string* endIt) {
         // traverse assigned strings
-        for (auto it = contents.begin; it != endIt; ++it) {
+        for (auto it = contents.p_begin; it != endIt; ++it) {
             os << '"';                 // beginning quotation mark
             for (auto &ch: *it) {
                 if (ch == '\"') {
@@ -48,9 +48,9 @@ namespace Utils {
     }
 
     bool CSVWriter::addEntry(std::ostream &os, StringsRange contents) const {
-        auto endIt = contents.end;
+        auto endIt = contents.p_end;
         if (contents.size() >= m_cols) {
-            endIt = contents.begin + m_cols;
+            endIt = contents.p_begin + m_cols;
             outputEscapeString(os, contents, endIt);
         } else {
             std::size_t absentColumnNumber = m_cols - contents.size();
@@ -72,7 +72,7 @@ namespace Utils {
         }
 
         for(auto i = 0; i < m_cols; ++i) {
-            m_keys[i] = keys.begin[i];
+            m_keys[i] = keys.p_begin[i];
         }
         m_cols = m_keys.size();
 

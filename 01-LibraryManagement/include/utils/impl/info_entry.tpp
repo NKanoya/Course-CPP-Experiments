@@ -6,38 +6,38 @@ namespace Utils {
 
     template<class T_, class EnumClass_, class ValidChecker_>
     InfoEntry<T_, EnumClass_, ValidChecker_>::
-    InfoEntry(PointerRange<T_> pointerRange) {
+    InfoEntry(ArrayView<T_> ArrayView) {
         // use copy mode
-        if(pointerRange.size() != KEYCOUNT) {
+        if(ArrayView.size() != KEYCOUNT) {
             m_arr[0] = "";      // construct an invalid object
             return;
         }
 
         // copy the elements to inner array
         for(int i = 0; i < KEYCOUNT; ++i) {
-            m_arr[i] = pointerRange.begin[i];
+            m_arr[i] = ArrayView.p_begin[i];
         }
     }
 
     template<class T_, class EnumClass_, class ValidChecker_>
     InfoEntry<T_, EnumClass_, ValidChecker_>::
-    InfoEntry(PointerRange<T_> pointerRange, InfoEntry::UseCopyTag useCopy)
-            : InfoEntry(pointerRange) {}
+    InfoEntry(ArrayView<T_> ArrayView, InfoEntry::UseCopyTag useCopy)
+            : InfoEntry(ArrayView) {}
 
     template<class T_, class EnumClass_, class ValidChecker_>
     InfoEntry<T_, EnumClass_, ValidChecker_>::
-    InfoEntry(PointerRange<T_> pointerRange, InfoEntry::UseMoveTag useMove) {
+    InfoEntry(ArrayView<T_> ArrayView, InfoEntry::UseMoveTag useMove) {
         // use copy mode
-        if(pointerRange.size() != KEYCOUNT) {
+        if(ArrayView.size() != KEYCOUNT) {
             m_arr[0] = "";      // construct an invalid object
             return;
         }
 
         // move the elements to inner array
         for(int i = 0; i < KEYCOUNT; ++i) {
-            m_arr[i] = std::move(pointerRange.begin[i]);
+            m_arr[i] = std::move(ArrayView.p_begin[i]);
 
-            std::cout << pointerRange.begin[i];
+            std::cout << ArrayView.p_begin[i];
         }
     }
 
@@ -84,9 +84,9 @@ namespace Utils {
     }
 
     template<class T_, class EnumClass_, class ValidChecker_>
-    inline PointerRange<T_> InfoEntry<T_, EnumClass_, ValidChecker_>::
+    inline ArrayView<T_> InfoEntry<T_, EnumClass_, ValidChecker_>::
     getRange() {
-        return PointerRange<T_>(m_arr);
+        return ArrayView<T_>(m_arr);
     }
 
 }

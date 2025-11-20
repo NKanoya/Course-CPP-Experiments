@@ -16,7 +16,7 @@ namespace Utils {
     /**
      * @brief Represents a non-owning view of a contiguous memory range.
      *
-     * PointerRange stores a pair of pointers (begin and one-past-the-end)
+     * ArrayView stores a pair of pointers (begin and one-past-the-end)
      * to describe a continuous memory block. It provides a unified interface
      * for accessing containers like @c std::vector, @c std::array, or C-style arrays,
      * but does not manage the memory's lifetime.
@@ -24,32 +24,68 @@ namespace Utils {
      * @tparam T The type of elements within the range.
      */
     template <class T>
-    struct PointerRange {
-        T* begin;
-        T* end;
+    struct ArrayView {
+        T* p_begin;
+        T* p_end;
 
-        explicit PointerRange(std::vector<T>& vector) : begin(&vector[0]), end(begin + vector.size()) {}
+        explicit ArrayView(std::vector<T>& vector) : p_begin(&vector[0]), p_end(p_begin + vector.size()) {}
 
         template <std::size_t size>
-        explicit PointerRange(std::array<T,size>& array) : begin(&array[0]), end(begin + size) {}
+        explicit ArrayView(std::array<T,size>& array) : p_begin(&array[0]), p_end(p_begin + size) {}
 
-        explicit PointerRange(T* array, std::size_t size) : begin(array), end(array + size) {}
+        explicit ArrayView(T* beginPointer, std::size_t size) : p_begin(beginPointer), p_end(p_begin + size) {}
 
         inline std::ptrdiff_t size() const noexcept {
-            return end - begin;
+            return p_end - p_begin;
         }
+
+        inline T* begin() noexcept {
+            return p_begin;
+        }
+
+        inline T* end() noexcept {
+            return p_end;
+        }
+
+        inline const T* begin() const noexcept {
+            return p_begin;
+        }
+
+        inline const T* end() const noexcept {
+            return p_end;
+        }
+
+        inline T& operator[](std::size_t index) {
+            return *(p_begin + index);
+        }
+
+        inline const T& operator[](std::size_t index) const {
+            return *(p_begin + index);
+        }
+
+        inline bool empty() const noexcept {
+            return p_begin == p_end;
+        }
+
+        void rebind(std::vector<T>& vector);
+
+        template <std::size_t length>
+        void rebind(std::array<T,length>& array);
+
+        void rebind(T* beginPointer, std::size_t length);
     };
 
+
     template <class T>
-    PointerRange<T> makePointerRange(std::vector<T>& vector);
+    ArrayView<T> makeArrayView(std::vector<T>& vector);
 
     template <class T, std::size_t arraySize>
-    PointerRange<T> makePointerRange(std::array<T, arraySize>& array);
+    ArrayView<T> makeArrayView(std::array<T, arraySize>& array);
 
     template <class T>
-    PointerRange<T> makePointerRange(T* array, std::size_t size);
+    ArrayView<T> makeArrayView(T* array, std::size_t size);
 
-    using EntryRange = PointerRange<std::string>;
+    using EntryRange = ArrayView<std::string>;
 
 
     struct DoMainKeyExist {
@@ -138,19 +174,19 @@ namespace Utils {
         /**
          * @brief Receive a range of array to construct the entry
          *
-         * @param pointerRange The pointer range of the space of array
+         * @param ArrayView The pointer range of the space of array
          *
          * @note The contructor will use copy semantics, that is to copy the elements from the ranges to
          * the entry
          *
-         * @see <code>IntroEntry(PointerRange&lt;T_>, UseCopyTag)</code> & <code>IntroEntry(PointerRange&lt;T_>, UseMoveTag)</code>
+         * @see <code>IntroEntry(ArrayView&lt;T_>, UseCopyTag)</code> & <code>IntroEntry(ArrayView&lt;T_>, UseMoveTag)</code>
          */
-        explicit InfoEntry(PointerRange<T_> pointerRange);
+        explicit InfoEntry(ArrayView<T_> ArrayView);
 
         /**
          * @brief Receive a range of array to construct the entry, explicitly using @b copy semantics
          *
-         * @param pointerRange The pointer range of the space of array
+         * @param ArrayView The pointer range of the space of array
          * @param useCopy The object inner struct of @c ::UseCopyTag . Use @c ::UseCopyTag{} to construct an empty
          * object
          *
@@ -160,16 +196,16 @@ namespace Utils {
          * <p>The second param requires an random object of inner struct type @c ::UseCopyTag (An empty one @c ::UseCopyTag{} is OK)
          * , only used for matching this version of overloaded constructors</p>
          *
-         * <p>This version of constructor does the same as the constructors with no tags <code>IntroEntry(PointerRange&lt;T_>)</code></p>
+         * <p>This version of constructor does the same as the constructors with no tags <code>IntroEntry(ArrayView&lt;T_>)</code></p>
          *
-         * @see If avoiding copying is expected, use <code>IntroEntry(PointerRange&lt;T_>, UseMoveTag)</code>
+         * @see If avoiding copying is expected, use <code>IntroEntry(ArrayView&lt;T_>, UseMoveTag)</code>
          */
-        InfoEntry(PointerRange<T_> pointerRange, UseCopyTag useCopy);
+        InfoEntry(ArrayView<T_> ArrayView, UseCopyTag useCopy);
 
         /**
          * @brief Receive a range of array to construct the entry, explicitly using @b move semantics
          *
-         * @param pointerRange The pointer range of the space of array
+         * @param ArrayView The pointer range of the space of array
          * @param useMove The object inner struct of @c ::UseMoveTag . Use @c ::UseMoveTag{} to construct an empty
          * object
          *
@@ -179,10 +215,10 @@ namespace Utils {
          * <p>The second param requires an random object of inner struct type @c ::UseMoveTag (An empty one @c ::UseMoveTag{} is OK)
          * , only used for matching this version of overloaded constructors</p>
          *
-         * @see use <code>IntroEntry(PointerRange&lt;T_>, UseCopyTag)</code> or default <code>IntroEntry(PointerRange&lt;T_>)</code>
+         * @see use <code>IntroEntry(ArrayView&lt;T_>, UseCopyTag)</code> or default <code>IntroEntry(ArrayView&lt;T_>)</code>
          * constructor when the data needs to be copied to the entry.
          */
-        InfoEntry(PointerRange<T_> pointerRange, UseMoveTag useMove);
+        InfoEntry(ArrayView<T_> ArrayView, UseMoveTag useMove);
 
         /**
          * @brief use @c ::Key as index to access the elements
@@ -221,7 +257,7 @@ namespace Utils {
          *
          * @return A pointer range, including the @c first and @c end pointers
          */
-        inline PointerRange<T_> getRange();
+        inline ArrayView<T_> getRange();
 
         /**
          * @brief Checks the validity of the object.
@@ -254,7 +290,7 @@ namespace Utils {
 
 }
 
-#include "impl/pointer_range.tpp"
+#include "impl/array_view.tpp"
 
 #include "impl/info_entry.tpp"
 

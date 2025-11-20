@@ -26,7 +26,7 @@ namespace Utils {
         CSVWriter(CSVWriter&& oth) = delete;
         CSVWriter& operator=(CSVWriter&& oth) = delete;
 
-        using StringsRange = Utils::PointerRange<std::string>;
+        using StringsRange = Utils::ArrayView<std::string>;
 
         void writeHeader(std::ostream& os) const;
         bool addEntry(std::ostream& os, StringsRange contents) const;
@@ -48,7 +48,7 @@ namespace Utils {
         CSVReader(CSVReader&& oth) = delete;
         CSVReader& operator=(CSVReader&& oth) = delete;
 
-        using StringsRange = Utils::PointerRange<std::string>;
+        using StringsRange = Utils::ArrayView<std::string>;
 
         bool readLine(std::istream &is, StringsRange inputList) const;
 

@@ -13,8 +13,10 @@ namespace Test {
 
     // defined in data_struct_test/
     void infoEntryTest();
+    void arrayViewTest();
 
     const char * const separation = "=====================================================\n";
+
 
 }
 

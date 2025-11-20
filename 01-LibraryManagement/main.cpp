@@ -9,8 +9,7 @@
 #include "test.hpp"
 
 int main() {
-    Test::CSVWriterTest();
-    Test::csvReaderTest();
+    Test::arrayViewTest();
 
     std::cout << std::endl;
     return 0;

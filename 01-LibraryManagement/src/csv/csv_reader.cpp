@@ -118,7 +118,7 @@ namespace Utils {
         }
 
         for(int i = 0; i < m_cols; ++i) {
-            inputList.begin[i] = strings[i];
+            inputList.p_begin[i] = strings[i];
         }
 
         return true;
