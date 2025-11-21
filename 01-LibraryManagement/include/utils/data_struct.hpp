@@ -11,90 +11,16 @@
 #include <stdexcept>
 #include <iostream>
 
+#include "array_view.hpp"
+
 namespace Utils {
 
-    /**
-     * @brief Represents a non-owning view of a contiguous memory range.
-     *
-     * ArrayView stores a pair of pointers (begin and one-past-the-end)
-     * to describe a continuous memory block. It provides a unified interface
-     * for accessing containers like @c std::vector, @c std::array, or C-style arrays,
-     * but does not manage the memory's lifetime.
-     *
-     * @tparam T The type of elements within the range.
-     */
-    template <class T>
-    struct ArrayView {
-        T* p_begin;
-        T* p_end;
-
-        explicit ArrayView(std::vector<T>& vector) : p_begin(&vector[0]), p_end(p_begin + vector.size()) {}
-
-        template <std::size_t size>
-        explicit ArrayView(std::array<T,size>& array) : p_begin(&array[0]), p_end(p_begin + size) {}
-
-        explicit ArrayView(T* beginPointer, std::size_t size) : p_begin(beginPointer), p_end(p_begin + size) {}
-
-        inline std::ptrdiff_t size() const noexcept {
-            return p_end - p_begin;
-        }
-
-        inline T* begin() noexcept {
-            return p_begin;
-        }
-
-        inline T* end() noexcept {
-            return p_end;
-        }
-
-        inline const T* begin() const noexcept {
-            return p_begin;
-        }
-
-        inline const T* end() const noexcept {
-            return p_end;
-        }
-
-        inline T& operator[](std::size_t index) {
-            return *(p_begin + index);
-        }
-
-        inline const T& operator[](std::size_t index) const {
-            return *(p_begin + index);
-        }
-
-        inline bool empty() const noexcept {
-            return p_begin == p_end;
-        }
-
-        void rebind(std::vector<T>& vector);
-
-        template <std::size_t length>
-        void rebind(std::array<T,length>& array);
-
-        void rebind(T* beginPointer, std::size_t length);
-    };
-
-
-    template <class T>
-    ArrayView<T> makeArrayView(std::vector<T>& vector);
-
-    template <class T, std::size_t arraySize>
-    ArrayView<T> makeArrayView(std::array<T, arraySize>& array);
-
-    template <class T>
-    ArrayView<T> makeArrayView(T* array, std::size_t size);
-
-    using EntryRange = ArrayView<std::string>;
-
-
     struct DoMainKeyExist {
-        template <class Array>
-        inline bool operator() (const Array& arr) const {
+        template<class Array>
+        inline bool operator()(const Array &arr) const {
             return !arr[0].empty();
         }
     };
-
 
     /**
      * @brief @c InfoEntry : a class managing structured data with enum-based keys
@@ -258,6 +184,15 @@ namespace Utils {
          * @return A pointer range, including the @c first and @c end pointers
          */
         inline ArrayView<T_> getRange();
+
+        /**
+         * @brief To get the owing continuous memory block of the internal array
+         *
+         * Use this interface to access the elements with numeric index (via pointer movement)
+         *
+         * @return A pointer range, including the @c first and @c end pointers
+         */
+        inline ArrayView<const T_> getRange() const;
 
         /**
          * @brief Checks the validity of the object.

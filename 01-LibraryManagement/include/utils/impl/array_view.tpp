@@ -6,7 +6,7 @@ namespace Utils {
     }
 
     template<class T, std::size_t arraySize>
-    Utils::ArrayView<T> makeArrayView(std::array<T, arraySize> &array) {
+    ArrayView<T> makeArrayView(std::array<T, arraySize> &array) {
         return ArrayView<T>{array};
     }
 
@@ -17,21 +17,44 @@ namespace Utils {
 
     template<class T>
     void ArrayView<T>::rebind(std::vector<T> &vector) {
-        p_begin = &vector[0];
-        p_end = p_begin + vector.size();
+        Impl::ArrayViewImpl<T>::p_begin = &vector[0];
+        Impl::ArrayViewImpl<T>::p_end = Impl::ArrayViewImpl<T>::p_begin + vector.size();
     }
 
     template<class T>
-    template<std::size_t length>
-    void ArrayView<T>::rebind(std::array<T, length> &array) {
-        p_begin = &array[0];
-        p_end = p_begin + length;
+    template<std::size_t arraySize>
+    void ArrayView<T>::rebind(std::array<T, arraySize> &array) {
+        Impl::ArrayViewImpl<T>::p_begin = &array[0];
+        Impl::ArrayViewImpl<T>::p_end = Impl::ArrayViewImpl<T>::p_begin + arraySize;
     }
 
     template<class T>
-    void ArrayView<T>::rebind(T *beginPointer, std::size_t length) {
-        p_begin = beginPointer;
-        p_end = p_begin + length;
+    void ArrayView<T>::rebind(T *beginPointer, std::size_t  arraySize) {
+        Impl::ArrayViewImpl<T>::p_begin = beginPointer;
+        Impl::ArrayViewImpl<T>::p_end = Impl::ArrayViewImpl<T>::p_begin +  arraySize;
+    }
+
+
+
+    // class ArrayView<const T>
+
+    template<class T>
+    void ArrayView<const T>::rebind(const std::vector<T> &vector) {
+        Impl::ArrayViewImpl<T>::p_begin = &vector[0];
+        Impl::ArrayViewImpl<T>::p_end = Impl::ArrayViewImpl<T>::p_begin + vector.size();
+    }
+
+    template<class T>
+    template<std::size_t arraySize>
+    void ArrayView<const T>::rebind(const std::array<T, arraySize> &array) {
+        Impl::ArrayViewImpl<T>::p_begin = &array[0];
+        Impl::ArrayViewImpl<T>::p_end = Impl::ArrayViewImpl<T>::p_begin +  arraySize;
+    }
+
+    template<class T>
+    void ArrayView<const T>::rebind(const T *beginPointer, std::size_t  arraySize) {
+        Impl::ArrayViewImpl<T>::p_begin = beginPointer;
+        Impl::ArrayViewImpl<T>::p_end = Impl::ArrayViewImpl<T>::p_begin +  arraySize;
     }
 
 }

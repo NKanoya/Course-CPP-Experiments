@@ -68,6 +68,34 @@ void Test::arrayViewTest() {
     viewVec.rebind(cArr2, sizeof(cArr2)/sizeof(int));
     testBasicMethods(viewVec, "viewArr rebound with a C Array");
 
+
+
+    auto testBasicMethodsFromConst = [](ArrayViewConst<int> view, const std::string& varName) {
+        std::cout << separation;
+        std::cout << "Test on " << varName << '\n';
+        std::cout << "Size:" << view.size() << '\n';
+
+        std::cout << "Traverse the array using member pointers in const context:" << '\n';
+        for(auto p = view.p_begin; p != view.p_end; ++p) {
+            std::cout << *p << " ";
+        } std::cout << '\n';
+
+        std::cout << "Traverse the array using begin() & end() interface in const context:" << '\n';
+        for(auto x: view) {
+            std::cout << x << " ";
+        } std::cout << '\n';
+
+        std::cout << "Access the elements via operator[] in const context:" << '\n';
+        for(int i = 0; i < view.size(); ++i) {
+            std::cout << view[i] << " ";
+        } std::cout << '\n';
+
+        std::cout << std::endl;
+
+    };
+
+    testBasicMethodsFromConst(viewVec, "viewVec conversed to a ArrayViewConst type");
+
 }
 
 void Test::infoEntryTest() {
