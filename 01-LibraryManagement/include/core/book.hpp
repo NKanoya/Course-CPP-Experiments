@@ -9,7 +9,7 @@
 #include <vector>
 #include <memory>
 #include <array>
-#include "utils/data_struct.hpp"
+#include "core_types.hpp"
 
 
 // internal enum
@@ -25,7 +25,7 @@ namespace Impl {
     };
 }
 
-using BookInfo = Utils::InfoEntry<std::string, Impl::BookInfoKey_>;
+using BookInfo = StringEntry<Impl::BookInfoKey_>;
 
 // internal enum
 namespace Impl {
@@ -38,7 +38,7 @@ namespace Impl {
     };
 }
 
-using CopyInfo = Utils::InfoEntry<std::string, Impl::CopyInfoKey_>;
+using CopyInfo = StringEntry<Impl::CopyInfoKey_>;
 
 
 class Book {
