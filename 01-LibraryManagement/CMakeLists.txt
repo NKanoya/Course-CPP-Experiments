@@ -3,8 +3,8 @@ project(LibraryManagement)
 
 set(CMAKE_CXX_STANDARD 20)
 
-add_subdirectory(src/csv)
-add_subdirectory(src/book)
+add_subdirectory(src/utils/csv)
+add_subdirectory(src/core/book)
 
 # test
 add_subdirectory(test)

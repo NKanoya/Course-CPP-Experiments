@@ -4,5 +4,5 @@ add_library(CSVParser
 )
 
 target_include_directories(CSVParser
-    PUBLIC ../../include/
+    PUBLIC ../../../include
 )
