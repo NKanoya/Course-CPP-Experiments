@@ -27,7 +27,7 @@ namespace Utils {
 
     static void outputEscapeString(std::ostream &os,
                                    CSVWriter::StringsRange& contents,
-                                   std::string* endIt) {
+                                   const std::string* endIt) {
         // traverse assigned strings
         for (auto it = contents.p_begin; it != endIt; ++it) {
             os << '"';                 // beginning quotation mark

@@ -6,7 +6,7 @@ namespace Utils {
 
     template<class T_, class EnumClass_, class ValidChecker_>
     InfoEntry<T_, EnumClass_, ValidChecker_>::
-    InfoEntry(ArrayView<T_> ArrayView) {
+    InfoEntry(ArrayViewConst<T_> ArrayView) {
         // use copy mode
         if(ArrayView.size() != KEYCOUNT) {
             m_arr[0] = "";      // construct an invalid object
@@ -21,7 +21,7 @@ namespace Utils {
 
     template<class T_, class EnumClass_, class ValidChecker_>
     InfoEntry<T_, EnumClass_, ValidChecker_>::
-    InfoEntry(ArrayView<T_> ArrayView, InfoEntry::UseCopyTag useCopy)
+    InfoEntry(ArrayViewConst<T_> ArrayView, InfoEntry::UseCopyTag useCopy)
             : InfoEntry(ArrayView) {}
 
     template<class T_, class EnumClass_, class ValidChecker_>
@@ -87,6 +87,12 @@ namespace Utils {
     inline ArrayView<T_> InfoEntry<T_, EnumClass_, ValidChecker_>::
     getRange() {
         return ArrayView<T_>(m_arr);
+    }
+
+    template<class T_, class EnumClass_, class ValidChecker_>
+    inline ArrayViewConst<T_> InfoEntry<T_, EnumClass_, ValidChecker_>::
+    getRange() const {
+        return ArrayView<const T_>(m_arr);
     }
 
 }

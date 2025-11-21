@@ -26,9 +26,10 @@ namespace Utils {
         CSVWriter(CSVWriter&& oth) = delete;
         CSVWriter& operator=(CSVWriter&& oth) = delete;
 
-        using StringsRange = Utils::ArrayView<std::string>;
+        using StringsRange = Utils::ArrayViewConst<std::string>;
 
         void writeHeader(std::ostream& os) const;
+
         bool addEntry(std::ostream& os, StringsRange contents) const;
 
         bool newKeys(StringsRange keys) noexcept;
