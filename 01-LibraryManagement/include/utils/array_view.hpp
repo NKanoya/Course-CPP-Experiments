@@ -330,7 +330,7 @@ namespace Utils {
      * @return ArrayView<const T> A constant view of the vector.
      */
     template<class T>
-    ArrayView<const T> makeArrayView(const std::vector<T> &vector);
+    ArrayView<const T> makeArrayViewConst(const std::vector<T> &vector);
 
     /**
      * @brief Factory function to create a const ArrayView from a constant std::array.
@@ -340,7 +340,7 @@ namespace Utils {
      * @return ArrayView<const T> A constant view of the array.
      */
     template<class T, std::size_t arraySize>
-    ArrayView<const T> makeArrayView(const std::array<T, arraySize> &array);
+    ArrayView<const T> makeArrayViewConst(const std::array<T, arraySize> &array);
 
     /**
      * @brief Factory function to create a const ArrayView from a constant raw pointer range.
@@ -350,7 +350,7 @@ namespace Utils {
      * @return ArrayView<const T> A constant view of the range.
      */
     template<class T>
-    ArrayView<const T> makeArrayView(const T *array, std::size_t size);
+    ArrayView<const T> makeArrayViewConst(const T *array, std::size_t size);
 
 
 }

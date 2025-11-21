@@ -107,7 +107,7 @@ void Test::infoEntryTest() {
         KEY_COUNT
     };
 
-    using TestedEntry = InfoEntry<std::string, TempEnum>;
+    using TestedEntry = InfoEntry<std::string, TempEnum, Utils::GetEmptyString>;
 
     //////////////////////////////////////////////////////////////////
     std::cout << Test::separation;
@@ -117,7 +117,7 @@ void Test::infoEntryTest() {
     ArrayView<std::string> range(strings);          // create a pointer range for the valuearray
 
     // create a through string
-    TestedEntry obj1(range);
+    TestedEntry obj1(Utils::makeArrayView(strings));
     std::cout << "Is obj1 valid: " << obj1.valid() << '\n';
 
     std::cout << "MAIN_KEY \t| " << obj1[TestedEntry::Key::MAIN_KEY] << '\n';

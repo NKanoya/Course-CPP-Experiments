@@ -15,12 +15,29 @@
 
 namespace Utils {
 
+
+
+    template<class T>
+    struct GetZero {
+        inline T operator()() const {
+            return 0;
+        }
+
+    };
+
+    struct GetEmptyString {
+        inline const char * const operator()() const {
+            return "";
+        }
+    };
+
     struct DoMainKeyExist {
         template<class Array>
         inline bool operator()(const Array &arr) const {
             return !arr[0].empty();
         }
     };
+
 
     /**
      * @brief @c InfoEntry : a class managing structured data with enum-based keys
@@ -54,6 +71,7 @@ namespace Utils {
      */
     template <class T_,
               class EnumClass_,
+              class InvalidValueGenerator_ = GetZero<T_>,
               class ValidChecker_ = DoMainKeyExist >
     class InfoEntry {
     public:
@@ -75,12 +93,15 @@ namespace Utils {
          */
         static const ValidChecker_ checker;
 
+        static const InvalidValueGenerator_ generateInvalid;
+
         /**
          * @brief @c ::UseCopyTag & @c ::UseMoveTag : The tag types use to call different version of overloaded constructors,
          * determining whether the constructor @b copys or @b moves the received elements to its internal array.
          */
-        struct UseCopyTag {};
         struct UseMoveTag {};
+        struct UseCopyTag {};
+
 
         // the class requires the number of keys (except for `KEY_COUNT`) should be at least 1
         static_assert(KEYCOUNT > 0, "The number of key should be at least 1!");
