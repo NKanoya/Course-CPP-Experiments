@@ -3,8 +3,8 @@ project(LibraryManagement)
 
 set(CMAKE_CXX_STANDARD 20)
 
-add_subdirectory(src/utils/csv)
-add_subdirectory(src/core/book)
+add_subdirectory(src/utils)
+add_subdirectory(src/core)
 
 # test
 add_subdirectory(test)
@@ -14,9 +14,8 @@ add_executable(LibraryManagement
 )
 
 target_link_libraries(LibraryManagement
-
-        PUBLIC CSVParser
-        PUBLIC Book
+        PUBLIC LibraryManagementUtils
+        PUBLIC LibraryManagementCore
 
         # test module
         PUBLIC Test
