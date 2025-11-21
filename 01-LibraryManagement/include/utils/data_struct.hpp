@@ -107,7 +107,7 @@ namespace Utils {
          *
          * @see <code>IntroEntry(ArrayView&lt;T_>, UseCopyTag)</code> & <code>IntroEntry(ArrayView&lt;T_>, UseMoveTag)</code>
          */
-        explicit InfoEntry(ArrayView<T_> ArrayView);
+        explicit InfoEntry(ArrayViewConst<T_> ArrayView);
 
         /**
          * @brief Receive a range of array to construct the entry, explicitly using @b copy semantics
@@ -126,7 +126,7 @@ namespace Utils {
          *
          * @see If avoiding copying is expected, use <code>IntroEntry(ArrayView&lt;T_>, UseMoveTag)</code>
          */
-        InfoEntry(ArrayView<T_> ArrayView, UseCopyTag useCopy);
+        InfoEntry(ArrayViewConst<T_> ArrayView, UseCopyTag useCopy);
 
         /**
          * @brief Receive a range of array to construct the entry, explicitly using @b move semantics
@@ -145,6 +145,9 @@ namespace Utils {
          * constructor when the data needs to be copied to the entry.
          */
         InfoEntry(ArrayView<T_> ArrayView, UseMoveTag useMove);
+
+        template<class ListT_>
+        InfoEntry(std::initializer_list<ListT_> list);
 
         /**
          * @brief use @c ::Key as index to access the elements
@@ -181,18 +184,18 @@ namespace Utils {
          *
          * Use this interface to access the elements with numeric index (via pointer movement)
          *
-         * @return A pointer range, including the @c first and @c end pointers
+         * @return A view of arraye, including the @c p_begin and @c p_end pointers
          */
         inline ArrayView<T_> getRange();
 
         /**
-         * @brief To get the owing continuous memory block of the internal array
+         * @brief To get the owing continuous memory block of the internal array in const context
          *
          * Use this interface to access the elements with numeric index (via pointer movement)
          *
-         * @return A pointer range, including the @c first and @c end pointers
+         * @return A const view of array, including the @c p_begin and @c p_end const pointers
          */
-        inline ArrayView<const T_> getRange() const;
+        inline ArrayViewConst<T_> getRange() const;
 
         /**
          * @brief Checks the validity of the object.

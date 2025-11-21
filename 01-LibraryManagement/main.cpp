@@ -3,13 +3,11 @@
 //
 
 #include <iostream>
-#include "core/book.hpp"
-#include "utils/csv.hpp"
 
 #include "test.hpp"
 
 int main() {
-    Test::arrayViewTest();
+    Test::bookStreamTest();
 
     std::cout << std::endl;
     return 0;

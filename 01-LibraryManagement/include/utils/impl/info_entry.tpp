@@ -20,6 +20,20 @@ namespace Utils {
     }
 
     template<class T_, class EnumClass_, class ValidChecker_>
+    template<class ListT_>
+    InfoEntry<T_, EnumClass_, ValidChecker_>::InfoEntry(std::initializer_list<ListT_> list) {
+        if(list.size() != KEYCOUNT) {
+            m_arr[0] = "";      // construct an invalid object
+            return;
+        }
+
+        // copy the elements to inner array
+        for(int i = 0; i < KEYCOUNT; ++i) {
+            m_arr[i] = *(data(list) + i);
+        }
+    }
+
+    template<class T_, class EnumClass_, class ValidChecker_>
     InfoEntry<T_, EnumClass_, ValidChecker_>::
     InfoEntry(ArrayViewConst<T_> ArrayView, InfoEntry::UseCopyTag useCopy)
             : InfoEntry(ArrayView) {}

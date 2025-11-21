@@ -4,5 +4,9 @@ add_library(Book
 )
 
 target_include_directories(Book
-    PRIVATE ../../include/
+    PUBLIC ../../include/
+)
+
+target_link_libraries(Book
+    PUBLIC CSVParser
 )

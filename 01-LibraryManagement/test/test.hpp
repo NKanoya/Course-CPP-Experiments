@@ -15,6 +15,9 @@ namespace Test {
     void infoEntryTest();
     void arrayViewTest();
 
+    // defined in book_test/
+    void bookStreamTest();
+
     const char * const separation = "=====================================================\n";
 
 

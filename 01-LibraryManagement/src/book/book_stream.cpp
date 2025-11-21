@@ -5,26 +5,27 @@
 #include "core/book.hpp"
 #include "Utils/csv.hpp"
 
-std::ostream& operator<<(std::ostream& os, BookInfo& bookInfo) noexcept {
-    Utils::CSVWriter writer(bookInfo.KEYCOUNT);
-
+std::ostream& operator<<(std::ostream& os, const BookInfo& bookInfo) {
+    Utils::CSVWriter writer(BookInfo::KEYCOUNT);
     writer.addEntry(os, bookInfo.getRange());
+    return os;
 }
 
-
-
-std::istream& operator>>(std::istream& is, BookInfo& bookInfo) noexcept {
-    Utils::CSVReader reader(bookInfo.KEYCOUNT);
-
+std::istream& operator>>(std::istream& is, BookInfo& bookInfo) {
+    Utils::CSVReader reader(BookInfo::KEYCOUNT);
     reader.readLine(is, bookInfo.getRange());
+    return is;
 }
 
+std::ostream& operator<<(std::ostream& os, const CopyInfo& copyInfo) {
+    Utils::CSVWriter writer(BookInfo::KEYCOUNT);
+    writer.addEntry(os, copyInfo.getRange());
+    return os;
+}
 
-//std::ostream& operator<<(std::ostream& os, const CopyEntry& copyEntry) noexcept {
-//
-//}
-//
-//std::istream& operator>>(std::istream& is, CopyEntry& copyEntry) noexcept {
-//
-//}
+std::istream& operator>>(std::istream& is, CopyInfo& copyInfo) {
+    Utils::CSVReader reader(BookInfo::KEYCOUNT);
+    reader.readLine(is, copyInfo.getRange());
+    return is;
+}
 

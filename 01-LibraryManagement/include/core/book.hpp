@@ -13,7 +13,7 @@
 
 
 // internal enum
-namespace {
+namespace Impl {
     enum class BookInfoKey_ {
         ISBN,
         TITLE,
@@ -25,10 +25,10 @@ namespace {
     };
 }
 
-using BookInfo = Utils::InfoEntry<std::string, BookInfoKey_>;
+using BookInfo = Utils::InfoEntry<std::string, Impl::BookInfoKey_>;
 
 // internal enum
-namespace {
+namespace Impl {
     enum class CopyInfoKey_ {
         IDENTIFIER_CODE,
         ISBN,
@@ -38,7 +38,7 @@ namespace {
     };
 }
 
-using CopyInfo = Utils::InfoEntry<std::string, BookInfoKey_>;
+using CopyInfo = Utils::InfoEntry<std::string, Impl::CopyInfoKey_>;
 
 
 class Book {
@@ -87,11 +87,12 @@ public:
 // interaction with streams
 
 // struct BookInfo
-std::ostream& operator<<(std::ostream& os, const BookInfo& bookInfo) noexcept;
-std::istream& operator>>(std::istream& is, BookInfo& bookInfo) noexcept;
+std::ostream& operator<<(std::ostream& os, const BookInfo& bookInfo);
+std::istream& operator>>(std::istream& is, BookInfo& bookInfo);
 
 // struct CopyEntry
-std::ostream& operator<<(std::ostream& os, const CopyInfo& copyEntry) noexcept;
-std::istream& operator>>(std::istream& is, CopyInfo& copyEntry) noexcept;
+std::ostream& operator<<(std::ostream& os, const CopyInfo& copyEntry);
+std::istream& operator>>(std::istream& is, CopyInfo& copyEntry);
+
 
 #endif //LIBRARYMANAGEMENT_BOOK_HPP
