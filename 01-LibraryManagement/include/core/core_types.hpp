@@ -1,5 +1,5 @@
 //
-// Created by pilip on 2025/11/22.
+// Created on 2025/11/22.
 //
 
 #ifndef LIBRARYMANAGEMENT_CORE_TYPES_HPP

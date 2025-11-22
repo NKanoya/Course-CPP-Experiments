@@ -1,68 +1,99 @@
-template <class EnumClass_>
-RecordCollection<EnumClass_>::RecordCollection(const StringEntryConst<EnumClass_>& keyList)
-    : m_set(), m_buffer(), m_keyList(keyList) { }
+template <class EnumClass_, class SubsidiaryDataType_>
+RecordCollection<EnumClass_, SubsidiaryDataType_>::RecordCollection(const StringEntry<EnumClass_>& keyList)
+// TODO: add validity check
+    : m_map(), m_buffer(), m_keyList(keyList) { }
 
-template <class EnumClass_>
-bool RecordCollection<EnumClass_>::addEntry(const Utils::CSVReader& csvReader, std::istream& is) {
+// Add Entry With Empty subsidiary Data
+template <class EnumClass_, class SubsidiaryDataType_>
+RecordCollection<EnumClass_, SubsidiaryDataType_>::iterator
+    RecordCollection<EnumClass_, SubsidiaryDataType_>::
+    addEntry(const Utils::CSVReader& csvReader, std::istream& is)
+{
 
-    bool readSuccessfully = csvReader.readLine(is,m_buffer);
+    // read from CSV stream, parse the strings into buffer
+    bool readSuccessfully = csvReader.readLine(is,m_buffer.getRange());
 
-    if(!readSuccessfully) return false;
-    if(m_buffer.invalid()) {
-        m_buffer.clear();
-        return false;
+    // return false if failing to read
+    if(!readSuccessfully) return end();
+    // return false if the buffer is invalid
+    if(!m_buffer.valid()) {
+        return end();
     }
 
-    auto result = m_set.insert(m_buffer);
+    // copy the main key as the key of the map element
+    auto key = m_buffer.getMainKey();
+    // insert the full key-buffer-subsidiaryData value into the map
+    // get the status pair from the return value
+    auto insertStatus = m_map.emplace(
+            std::move(key),
+            ValueType{std::move(m_buffer), {}}
+    );
 
-    m_buffer.clear();
-    return result.second;     // if the insertion is successful
+    // set the buffer to invalid again
+    m_buffer[static_cast<EnumClass_>(0)] = "";
+    return insertStatus.first;     // return the map::iterator, implicitly conversed to ::iterator
 
 }
 
-template <class EnumClass_>
-bool RecordCollection<EnumClass_>::addEntry(EntryType entry) {
+template <class EnumClass_, class SubsidiaryDataType_>
+RecordCollection<EnumClass_, SubsidiaryDataType_>::iterator
+    RecordCollection<EnumClass_, SubsidiaryDataType_>::
+    addEntry(EntryType entry)
+{
+    // return false if the buffer is invalid
     if(!entry.valid()) {
+        return end();
+    }
+
+    // copy the main key as the key of the map element
+    auto key = entry.getMainKey();
+    // insert the full key-buffer-subsidiaryData value into the map
+    // get the status pair from the return value
+    auto insertStatus = m_map.emplace(
+            std::move(key),
+            ValueType{std::move(m_buffer), {}}
+    );
+
+    // get the status pair from the retuen value
+    m_buffer[static_cast<EnumClass_>(0)] = "";
+    return insertStatus.first;      // return the map::iterator, implicitly conversed to ::iterator
+}
+
+template <class EnumClass_, class SubsidiaryDataType_>
+RecordCollection<EnumClass_, SubsidiaryDataType_>::EntryType*
+RecordCollection<EnumClass_, SubsidiaryDataType_>::getEntryPointer(const std::string& mainKey) {
+    auto it = m_map.find(mainKey);
+
+    if(it == m_map.end()) {
+        return nullptr;       // invalid value
+    }
+    return &(it -> second.entryContent);
+}
+
+template <class EnumClass_, class SubsidiaryDataType_>
+const RecordCollection<EnumClass_, SubsidiaryDataType_>::EntryType*
+RecordCollection<EnumClass_, SubsidiaryDataType_>::getEntryConstPointer(const std::string& mainKey) {
+    auto it = m_map.find(mainKey);
+
+    if(it == m_map.end()) {
+        return nullptr;       // invalid value
+    }
+    return &(it -> second.entryContent);
+}
+
+template <class EnumClass_, class SubsidiaryDataType_>
+bool RecordCollection<EnumClass_, SubsidiaryDataType_>::
+outputCollection(Utils::CSVWriter& csvWriter, std::ostream& os) const {
+    if(csvWriter.newKeys(m_keyList.getRange())) {
         return false;
     }
 
-    auto result = m_set.insert(std::move(entry));
+    csvWriter.writeHeader(os);
 
-    m_buffer.clear();
-    return result.second;     // if the insertion is successful
-}
-
-template <class EnumClass_>
-const RecordCollection<EnumClass_>::EntryConstType&
-RecordCollection<EnumClass_>::getEntryConst(std::string& mainKey) const {
-    auto it = m_set.begin();
-    for(; it != m_set.end(); ++it) {
-        if(it -> getMainKey() == mainKey) {
-            break;
-        }
+    for(auto& entry: m_map) {
+        csvWriter.addEntry(os, entry.second.getRange());
     }
 
-    if(it == m_set.end()) {
-        return m_buffer;       // invalid value
-        // !! thread unsecurity
-    }
-    return *it;
-}
-
-template <class EnumClass_>
-RecordCollection<EnumClass_>::EntryType&
-RecordCollection<EnumClass_>::getEntry(std::string mainKey) {
-    auto it = m_set.begin();
-    for(; it != m_set.end(); ++it) {
-        if(it -> getMainKey() == mainKey) {
-            break;
-        }
-    }
-
-    if(it == m_set.end()) {
-        return m_buffer;       // invalid value
-        // !! thread unsecurity
-    }
-    return *it;
+    return true;
 }
 
