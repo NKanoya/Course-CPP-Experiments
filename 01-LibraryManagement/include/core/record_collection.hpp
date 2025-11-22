@@ -281,6 +281,13 @@ public:
         return m_map.end();
     }
 
+    /**
+     * @brief Clears all records within the collection. The list of keys' names will be reserved
+     */
+    inline void clear() {
+        m_map.clear();
+    }
+
 };
 
 // the implementation of the template methods
