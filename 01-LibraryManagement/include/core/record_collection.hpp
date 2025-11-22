@@ -9,6 +9,9 @@
 #include "core/core_types.hpp"
 #include "utils/csv.hpp"
 
+// -------------------------------------------------------------
+//  Internal implement struct
+// -------------------------------------------------------------
 
 namespace Impl {
 
@@ -19,6 +22,9 @@ namespace Impl {
 
 }
 
+// -------------------------------------------------------------
+//  class RecordCollection
+// -------------------------------------------------------------
 
 /**
  * @brief A collection of records, each of which composed of an string entry and a subsidiary data.
@@ -38,6 +44,11 @@ namespace Impl {
 template <class KeyEnumClass_, class SubsidiaryDataType_ = Impl::Empty>
 class RecordCollection {
 public:
+
+    // -------------------------------------------------------------
+    //  The Alias in the scope of RecordCollection
+    // -------------------------------------------------------------
+
     /** @brief Alias for the type of every Entry. */
     using EntryType = StringEntry<KeyEnumClass_>;
 
@@ -64,6 +75,10 @@ public:
 
 protected:
 
+    // -------------------------------------------------------------
+    //  The protected member of RecordCollection
+    // -------------------------------------------------------------
+
     /** @brief The internal map containers, using the main key string as key and storing the entry and subsidiary data
      * as value. */
     std::map<std::string, Record> m_map;
@@ -81,6 +96,10 @@ protected:
 
 public:
 
+    // -------------------------------------------------------------
+    //  The iterator of RecordCollection
+    // -------------------------------------------------------------
+
     /**
      * @brief The bidirectional iterator pointing at the record (a pack of entry and the subsidiary data).
      */
@@ -91,7 +110,7 @@ public:
 
     public:
 
-        // Aliases adhering to the iterator stardard
+        // Aliases adhering to the iterator standard
         using iterator_category = std::bidirectional_iterator_tag;
         using different_type = std::ptrdiff_t;
         using value_type = Pack_;
@@ -160,6 +179,10 @@ public:
 
     };
 
+    // -------------------------------------------------------------
+    //  The constructor of RecordCollection
+    // -------------------------------------------------------------
+
     /**
      * @brief The constructor to create a record Collection.
      *
@@ -169,6 +192,63 @@ public:
      * <p>The collection object will use the @c keyList as the string-formed key.</p>
      */
     explicit RecordCollection(const StringEntry<KeyEnumClass_>& keyList);
+
+    // -------------------------------------------------------------
+    //  Methods of Access to the elements (through pointers)
+    // -------------------------------------------------------------
+
+    /**
+     * @brief gets the pointer of the record.
+     * @param mainKey <code>const String&</code> : the appointed main key to find the record.
+     * @return @c Record* : The pointer of the corresponding record, @c nullptr when failing to find.
+     */
+    Record* getRecordPointer(const std::string& mainKey);
+
+    /**
+     * @brief gets the const pointer of the entry (subsidiary data not included).
+     * @param mainKey <code>const String&</code> : the appointed main key to find the entry  within the record (in const
+     * context).
+     * @return <code>const Record*</code> : The const pointer of the corresponding record, @c nullptr when failing to
+     * find.
+     */
+    const Record* getRecordConstPointer(const std::string& mainKey) const;
+
+    /**
+     * @brief gets the pointer of the entry (subsidiary data not included).
+     * @param mainKey <code>const String&</code> : the appointed main key to find the entry within the record.
+     * @return @c EntryType* : The pointer of the corresponding entry, @c nullptr when failing to find.
+     *
+     * @see @c getRecordPointer() / @c getRecordConstPointer() for pointers of the whole record including the entry and
+     * the subsidiary.
+     */
+    EntryType* getEntryPointer(const std::string& mainKey);
+
+    /**
+     * @brief gets the const pointer of the entry (subsidiary data not included).
+     * @param mainKey <code>const String&</code> : the appointed main key to find the entry  within the record (in const
+     * context).
+     * @return <code>const EntryType*</code> : The const pointer of the corresponding entry, @c nullptr when failing to
+     * find.
+     *
+     * @see @c getRecordPointer() / @c getRecordConstPointer() for pointers of the whole record including the entry and
+     * the subsidiary.
+     */
+    const EntryType* getEntryConstPointer(const std::string& mainKey) const;
+
+    // -------------------------------------------------------------
+    //  I/O-related Methods of RecordCollection
+    // -------------------------------------------------------------
+
+    /**
+     * @brief Add an constructed entry directly to the collection.
+     *
+     * @param Entry <code>EntryType</code> : The entry to be added
+     * @return @c ::iterator : the iterator of the inserted record, or @c end() when the insertion fails.
+     *
+     * @note the @c subsidiaryData will be constructed empty in the new-created entry element.
+     * If the entry needs please traverse
+     */
+    iterator addEntry(EntryType entry);
 
     /**
      * @brief Writes one CSV line, and parse it as an entry and add it to the collection.
@@ -182,32 +262,6 @@ public:
      * @note the @c subsidiaryData will be constructed empty in the new-created entry element.
      */
     iterator addEntry(const Utils::CSVReader& csvReader, std::istream& is);
-
-    /**
-     * @brief Add an constructed entry directly to the collection.
-     *
-     * @param Entry <code>EntryType</code> : The entry to be added
-     * @return @c ::iterator : the iterator of the inserted record, or @c end() when the insertion fails.
-     * 
-     * @note the @c subsidiaryData will be constructed empty in the new-created entry element.
-     * If the entry needs please traverse
-     */
-    iterator addEntry(EntryType entry);
-
-    /**
-     * @brief gets the pointer of the entry pack.
-     * @param mainKey <code>const String&</code> : the appointed main key to find the entry
-     * @return @c EntryType* : The pointer of the corresponding entry, @c nullptr when failing to find.
-     */
-    EntryType* getEntryPointer(const std::string& mainKey);
-
-    /**
-     * @brief gets the const pointer of the entry pack.
-     * @param mainKey <code>const String&</code> : the appointed main key to find the entry (in const
-     * context)
-     * @return <code>const EntryType*</code> : The pointer of the corresponding entry, @c nullptr when failing to find.
-     */
-    const EntryType* getEntryConstPointer(const std::string& mainKey);
 
     /**
      * @brief Outputs the whole collection with a injected @c CSVWriter and a output stream

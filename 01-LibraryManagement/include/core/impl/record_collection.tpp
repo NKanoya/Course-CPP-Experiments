@@ -26,7 +26,7 @@ RecordCollection<EnumClass_, SubsidiaryDataType_>::iterator
     // get the status pair from the return value
     auto insertStatus = m_map.emplace(
             std::move(key),
-            ValueType{std::move(m_buffer), {}}
+            Record{std::move(m_buffer), {}}
     );
 
     // set the buffer to invalid again
@@ -51,7 +51,7 @@ RecordCollection<EnumClass_, SubsidiaryDataType_>::iterator
     // get the status pair from the return value
     auto insertStatus = m_map.emplace(
             std::move(key),
-            ValueType{std::move(m_buffer), {}}
+            Record{std::move(m_buffer), {}}
     );
 
     // get the status pair from the retuen value
@@ -60,8 +60,8 @@ RecordCollection<EnumClass_, SubsidiaryDataType_>::iterator
 }
 
 template <class EnumClass_, class SubsidiaryDataType_>
-RecordCollection<EnumClass_, SubsidiaryDataType_>::EntryType*
-RecordCollection<EnumClass_, SubsidiaryDataType_>::getEntryPointer(const std::string& mainKey) {
+RecordCollection<EnumClass_, SubsidiaryDataType_>::Record*
+RecordCollection<EnumClass_, SubsidiaryDataType_>::getRecordPointer(const std::string& mainKey) {
     auto it = m_map.find(mainKey);
 
     if(it == m_map.end()) {
@@ -71,14 +71,26 @@ RecordCollection<EnumClass_, SubsidiaryDataType_>::getEntryPointer(const std::st
 }
 
 template <class EnumClass_, class SubsidiaryDataType_>
-const RecordCollection<EnumClass_, SubsidiaryDataType_>::EntryType*
-RecordCollection<EnumClass_, SubsidiaryDataType_>::getEntryConstPointer(const std::string& mainKey) {
+const RecordCollection<EnumClass_, SubsidiaryDataType_>::Record*
+RecordCollection<EnumClass_, SubsidiaryDataType_>::getRecordConstPointer(const std::string& mainKey) const {
     auto it = m_map.find(mainKey);
 
     if(it == m_map.end()) {
         return nullptr;       // invalid value
     }
     return &(it -> second.entryContent);
+}
+
+template <class EnumClass_, class SubsidiaryDataType_>
+RecordCollection<EnumClass_, SubsidiaryDataType_>::EntryType*
+RecordCollection<EnumClass_, SubsidiaryDataType_>::getEntryPointer(const std::string& mainKey) {
+    return getEntryConstPointer();
+}
+
+template <class EnumClass_, class SubsidiaryDataType_>
+const RecordCollection<EnumClass_, SubsidiaryDataType_>::EntryType*
+RecordCollection<EnumClass_, SubsidiaryDataType_>::getEntryConstPointer(const std::string& mainKey) const {
+    return getRecordConstPointer();
 }
 
 template <class EnumClass_, class SubsidiaryDataType_>
