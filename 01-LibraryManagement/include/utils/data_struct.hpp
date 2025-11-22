@@ -218,6 +218,8 @@ namespace Utils {
          */
         inline ArrayViewConst<T_> getRange() const;
 
+        inline const T_& getMainKey() const;
+
         /**
          * @brief Checks the validity of the object.
          *

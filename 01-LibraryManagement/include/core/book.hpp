@@ -9,7 +9,8 @@
 #include <vector>
 #include <memory>
 #include <array>
-#include "core_types.hpp"
+#include "core/core_types.hpp"
+#include "core/record_collection.hpp"
 
 
 // internal enum
@@ -27,6 +28,8 @@ namespace Impl {
 
 using BookInfo = StringEntry<Impl::BookInfoKey_>;
 
+using BookCollection = RecordCollection<Impl::BookInfoKey_>;
+
 // internal enum
 namespace Impl {
     enum class CopyInfoKey_ {
@@ -39,6 +42,8 @@ namespace Impl {
 }
 
 using CopyInfo = StringEntry<Impl::CopyInfoKey_>;
+
+using CopyCollection = RecordCollection<Impl::CopyInfoKey_>;
 
 
 class Book {

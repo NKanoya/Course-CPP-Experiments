@@ -8,6 +8,13 @@
 #include "utils/data_struct.hpp"
 
 template <class EnumClass_>
+using StringEntryConst = Utils::InfoEntry<
+        const std::string,
+        EnumClass_,
+        Utils::GetEmptyString
+>;
+
+template <class EnumClass_>
 using StringEntry = Utils::InfoEntry<
         std::string,
         EnumClass_,

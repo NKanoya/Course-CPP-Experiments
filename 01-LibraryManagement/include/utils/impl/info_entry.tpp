@@ -112,5 +112,11 @@ namespace Utils {
         return ArrayView<const T_>(m_arr);
     }
 
+    template<class T_, class EnumClass_, class InvalidValueGenerator_, class ValidChecker_>
+    inline const T_& InfoEntry<T_, EnumClass_, InvalidValueGenerator_,  ValidChecker_>::
+    getMainKey() const {
+        return m_arr[0];
+    }
+
 }
 
