@@ -3,6 +3,7 @@ project(online_shopping_management)
 
 set(CMAKE_CXX_STANDARD 20)
 
+add_subdirectory(src/core)
 add_subdirectory(src/utils)
 add_subdirectory(test)
 
