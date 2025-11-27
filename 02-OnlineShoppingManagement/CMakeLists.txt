@@ -1,16 +1,19 @@
 cmake_minimum_required(VERSION 3.29)
-project(OnlineShoppingManagement)
+project(online_shopping_management)
 
 set(CMAKE_CXX_STANDARD 20)
 
 
-add_executable(OnlineShoppingManagement
+add_executable(online_shopping_management
         main.cpp
 )
 
 
-target_include_directories(OnlineShoppingManagement
         PUBLIC include/
+        PUBLIC include
+)
+target_link_libraries(online_shopping_management
+        PUBLIC core
 )
 
 
