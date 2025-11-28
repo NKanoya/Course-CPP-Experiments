@@ -50,6 +50,8 @@ public:
         return m_stock;
     }
 
+    friend std::ostream& operator<<(std::ostream& os, const Item& item);
+
 };
 
 #endif //ONLINESHOPPINGMANAGEMENT_GOODS_HPP

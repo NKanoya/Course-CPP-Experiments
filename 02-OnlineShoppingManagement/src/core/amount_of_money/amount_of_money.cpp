@@ -4,7 +4,6 @@
 
 #include "core/amount_of_money.hpp"
 #include <string>
-#include <iostream>
 
 AmountOfMoney AmountOfMoney::convertFromString(const std::string& str) {
     AmountOfMoney amount{0};

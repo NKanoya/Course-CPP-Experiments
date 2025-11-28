@@ -27,8 +27,12 @@ public:
     AmountOfMoney(long double amount) : m_amount(amount * 100) {}
     AmountOfMoney(const AmountOfMoney& oth) : m_amount(oth.m_amount) {}
 
-    DoubleType getDoubleAmount() {
+    DoubleType getDoubleAmount() const {
         return m_amount / 100.0;
+    }
+
+    ValueType getInteger() const {
+        return m_amount / 100;
     }
 
     inline AmountOfMoney operator+(const AmountOfMoney& oth) const {
@@ -91,6 +95,8 @@ public:
     inline AmountOfMoney discount(uint8_t discount) const {
         return AmountOfMoney{m_amount * (100 - discount) / 80};
     }
+
+    friend std::ostream& operator<<(std::ostream& os, const AmountOfMoney& amount);
 
     static AmountOfMoney convertFromString(const std::string& str);
 

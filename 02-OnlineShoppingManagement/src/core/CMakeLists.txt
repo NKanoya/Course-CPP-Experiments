@@ -4,6 +4,7 @@ add_subdirectory(collections)
 add_subdirectory(amount_of_money)
 add_subdirectory(customer)
 add_subdirectory(purchase)
+add_subdirectory(stream)
 
 target_include_directories(core
         INTERFACE ../../include
@@ -14,6 +15,7 @@ target_link_libraries(core
         INTERFACE amount_of_money
         INTERFACE customer
         INTERFACE purchase
+        INTERFACE stream
 )
 
 

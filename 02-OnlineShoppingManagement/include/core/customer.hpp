@@ -63,7 +63,7 @@ public:
 
     virtual bool isPremier() const noexcept;
 
-
+    friend std::ostream& operator<<(std::ostream& os, const Member& member);
 };
 
 class PremierMember : public Member {
