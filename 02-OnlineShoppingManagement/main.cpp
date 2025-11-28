@@ -4,8 +4,11 @@
 
 #include <iostream>
 #include "test_include.hpp"
+#include "core/shop.hpp"
 
 int main() {
-    test::test_purchase_collection();
-    std::cout << "Hello World!" << std::endl;
+    Shop shop;
+    shop.operation();
+
+    return 0;
 }
