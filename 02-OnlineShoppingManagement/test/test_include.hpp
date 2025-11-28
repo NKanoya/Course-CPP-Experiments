@@ -11,6 +11,9 @@ namespace test {
     // csv
     void test_csv_import();
 
+    // collection
+    void test_purchase_collection();
+
 }
 
 
