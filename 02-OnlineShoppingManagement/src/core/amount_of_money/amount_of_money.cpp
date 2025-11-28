@@ -13,7 +13,9 @@ AmountOfMoney AmountOfMoney::convertFromString(const std::string& str) {
     size_t dotPos = str.find('.');
 
     if(dotPos == std::string::npos) {
-        return std::stoll(str) * 100;
+        AmountOfMoney a;
+        a.m_amount = std::stoll(str) * 100;
+        return a;
     }
 
     std::string integerStr = str.substr(0, dotPos);
@@ -26,7 +28,6 @@ AmountOfMoney AmountOfMoney::convertFromString(const std::string& str) {
     } else if(decimalStr.length() >= 2) {
         amount.m_amount += (decimalStr[0] - '0') * 10 + (decimalStr[1] - '0');
     }
-
 
     return amount;
 }

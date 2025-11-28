@@ -39,10 +39,15 @@ public:
     template <class Func>
     void displayPurchases(std::ostream& os, Func&& condition);
 
-    Customer* registerMember(bool isPremier, unsigned int points);
+    Customer* registerMember(std::string name, std::string tel, unsigned int points, bool isPremier);
+
+    Customer* registerMemberWhenPurchasing(bool isPremier, unsigned int points);
 
     Purchase* transaction(const std::vector<CartItem>& items);
     Purchase* transaction(const std::string& memberID, const std::vector<CartItem>& items);
+
+    void importFromCSV();
+    void exportToCSV();
 };
 
 template<class Func>

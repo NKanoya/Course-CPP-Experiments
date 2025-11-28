@@ -5,12 +5,12 @@
 #include "core/shop.hpp"
 #include <limits>
 
-void clearInput() {
+static void clearInput() {
     std::cin.clear();
     std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
 }
 
-std::string readString(const std::string& prompt) {
+static std::string readString(const std::string& prompt) {
     std::string input;
     std::cout << prompt;
 
@@ -44,6 +44,7 @@ void Shop::operation() {
         std::cout << "\t[b] Member Management & Registration\n";
         std::cout << "\t[c] New Transaction (Purchase)\n";
         std::cout << "\t[d] Display Purchases History\n";
+        std::cout << "\t[s] Save Data to the Files\n";
         std::cout << "\t[q] Quit\n";
         std::cout << "Enter operation choice: ";
 
@@ -100,9 +101,11 @@ void Shop::operation() {
                 if (member_ch == '1') {
                     int type = readNumeric<int>("Enter type (0 for Regular, 1 for Premier): ");
                     bool isPremier = (type == 1);
+                    std::string name = readNumeric<std::string>("Enter Your Name: ");
+                    std::string tel = readNumeric<std::string>("Enter Your Phone Number: ");
                     unsigned int points = readNumeric<unsigned int>("Enter Initial Points: ");
+                    auto newMember = this -> registerMember(std::move(name), std::move(tel), points, isPremier);
 
-                    Customer* newMember = registerMember(isPremier, points);
                     std::cout << "\nMember registered! Type: " << (isPremier ? "PREMIER" : "REGULAR") << ", ID: " << newMember->getID() << "\n";
                 } else if (member_ch == '2') {
                     std::cout << "\n--- All Members ---\n";
@@ -196,6 +199,10 @@ void Shop::operation() {
             case 'q':
                 std::cout << "\nExiting Shop Management System.\n";
                 return;
+
+            case 's' :
+                exportToCSV();
+                break;
 
             default:
                 std::cout << "Invalid choice. Please try again.\n";
