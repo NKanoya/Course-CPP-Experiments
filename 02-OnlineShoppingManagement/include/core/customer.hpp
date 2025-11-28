@@ -7,6 +7,7 @@
 
 #include <string>
 #include "core/amount_of_money.hpp"
+#include <iostream>
 
 class Customer {
     std::string m_ID;
@@ -28,8 +29,8 @@ class Member : public Customer {
     std::string m_tel;
     unsigned int m_points;
 public:
-    Member(const std::string& ID, const std::string& name, const std::string tel, unsigned int points)
-        : Customer(ID), m_name(name), m_tel(tel), m_points(points) {}
+    Member(std::string ID, std::string name, std::string tel, unsigned int points)
+        : Customer(std::move(ID)), m_name(std::move(name)), m_tel(std::move(tel)), m_points(points) {}
 
     inline Price realPrice(Price& price) override {
         return price.discount(2);
@@ -69,9 +70,9 @@ public:
 class PremierMember : public Member {
     std::string m_secondaryID;
 public:
-    PremierMember(const std::string& ID, const std::string& name, const std::string tel, unsigned int points,
-                  const std::string& secondaryID)
-        : Member(ID, name, tel, points), m_secondaryID(secondaryID) {}
+    PremierMember(std::string ID, std::string name, std::string tel, unsigned int points,
+                  std::string secondaryID)
+        : Member(std::move(ID), std::move(name), std::move(tel), points), m_secondaryID(secondaryID) {}
 
     inline Price realPrice(Price &price) override {
         return price.discount(5);
@@ -86,6 +87,8 @@ public:
     auto& setSecondaryID() {
         return m_secondaryID;
     }
+
+    friend std::ostream& operator<<(std::ostream& os, const PremierMember& premier);
 };
 
 #endif //ONLINESHOPPINGMANAGEMENT_CUSTOMER_HPP

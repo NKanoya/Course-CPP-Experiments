@@ -67,18 +67,28 @@ bool PurchaseCollection::importFromCSV() {
 
                     auto& emplaced = m_vec.emplace_back(timePoint, id, readCustomerID);
                     current = &emplaced;
-                    lastId = id;
+
                 }
+
+                auto currentSumPrice = csv.GetCell<Price>(8, i);
+                auto currentRealPrice = csv.GetCell<Price>(9, i);
 
                 Purchase::PurchasedItem item(
                         csv.GetCell<std::string>(5, i),
                         csv.GetCell<std::string>(4, i),
                         csv.GetCell<Price>(6, i),
                         csv.GetCell<unsigned int>(7, i),
-                        csv.GetCell<Price>(8, i),
-                        csv.GetCell<Price>(9, i)
+                        currentSumPrice, currentRealPrice
                 );
                 current -> setPurchaseItem().emplace_back(item);
+
+                current -> setDiscount() += currentSumPrice - currentRealPrice;
+                current -> setTotalPrice() += currentRealPrice;
+
+                if(id != lastId) {
+
+                    lastId = id;
+                }
 
             } catch (const std::exception& e) {
                 std::cerr << "Error when loading items in row " << i << "\n";

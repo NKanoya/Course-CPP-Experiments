@@ -5,7 +5,7 @@
 #include "core/purchase.hpp"
 #include <numeric>
 
-Purchase::Purchase(Customer *customer, std::vector<CartItem> items, Purchase::PurchaseTime time) {
+Purchase::Purchase(Customer *customer, const std::vector<CartItem>& items, Purchase::PurchaseTime time) {
     for(auto& cartItem: items) {
         auto item = *(cartItem.item);
         if(cartItem.count > item.getStock()) {

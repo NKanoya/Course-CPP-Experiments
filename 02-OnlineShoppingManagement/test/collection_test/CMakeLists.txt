@@ -11,4 +11,5 @@ target_link_libraries(collection_test
         PUBLIC purchase
         PUBLIC collections
         PUBLIC amount_of_money
+        PUBLIC stream
 )

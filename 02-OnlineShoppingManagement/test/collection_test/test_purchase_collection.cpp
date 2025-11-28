@@ -12,6 +12,10 @@ namespace test {
         PurchaseCollection purchaseCollection("purchase_brief.csv","purchase_details.csv");
         purchaseCollection.importFromCSV();
 
+        for(const auto& item : purchaseCollection) {
+            std::cout << item << '\n';
+        }
+
         try {
             purchaseCollection.exportToCSV();
         } catch(std::exception& e) {

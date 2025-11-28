@@ -44,7 +44,7 @@ protected:
     Price m_totalPrice;
 
 public:
-    Purchase(Customer* customer, std::vector<CartItem> items, PurchaseTime time);
+    Purchase(Customer* customer, const std::vector<CartItem>& items, PurchaseTime time);
     Purchase(PurchaseTime time, std::string ID, std::string customerId)
         : m_time(time), m_ID(std::move(ID)), m_customerID(std::move(customerId)) {}
 
@@ -68,13 +68,23 @@ public:
         return m_customerID;
     }
 
-    const Price getDiscount() const {
+    const Price& getDiscount() const {
         return m_discount;
     }
 
-    const Price getTotalPrice() const {
+    const Price& getTotalPrice() const {
         return m_totalPrice;
     }
+
+    Price& setDiscount() {
+        return m_discount;
+    }
+
+    Price& setTotalPrice() {
+        return m_totalPrice;
+    }
+
+    friend std::ostream& operator<<(std::ostream& os, const Purchase& purchase);
 
 };
 

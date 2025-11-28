@@ -35,6 +35,22 @@ public:
     template <class Func>
     EntryPtrs getEntries(Func&& condition);
 
+    auto begin() {
+        return m_vec.begin();
+    }
+
+    auto end() {
+        return m_vec.end();
+    }
+
+    auto begin() const {
+        return m_vec.begin();
+    }
+
+    auto end() const {
+        return m_vec.end();
+    }
+
 };
 
 

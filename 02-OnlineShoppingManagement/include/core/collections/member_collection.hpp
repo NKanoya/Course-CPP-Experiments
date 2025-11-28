@@ -10,7 +10,13 @@
 #include <vector>
 #include <memory>
 
-using MemberPointer = std::shared_ptr<Member>;
+class MemberPointer : public std::shared_ptr<Member> {
+public:
+    MemberPointer(const std::shared_ptr<Member>& member) : std::shared_ptr<Member>(member) {}
+    const std::string& getID() const {
+        return (*this) -> getID();
+    }
+};
 
 class MemberCollection : public Collection<MemberPointer> {
 public:

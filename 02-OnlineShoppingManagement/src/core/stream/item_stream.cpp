@@ -11,4 +11,6 @@ std::ostream& operator<<(std::ostream& os, const Item& item) {
     os << "Name: " <<  item.m_name << "   ";
     os << "Price: " <<  item.m_price << "   ";
     os << "Stock: " <<  item.m_stock;
+
+    return os;
 }
