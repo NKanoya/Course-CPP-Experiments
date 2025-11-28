@@ -28,14 +28,14 @@ bool Collection<T_>::deleteEntry(const IDType_ &ID) {
 template<class T_>
 template<class IDType_>
 T_ * const Collection<T_>::getEntry(const IDType_ &ID) {
-    auto it = std::find(m_vec.begin(), m_vec.end(), [&ID](const T_& entry) -> bool {
-        return entry.m_ID == ID;
+    auto it = std::find_if(m_vec.begin(), m_vec.end(), [&ID](const T_& entry) -> bool {
+        return entry.getID() == ID;
     });
 
     if(it == m_vec.end())
         return nullptr;
 
-    return it.base();
+    return &(*it);
 }
 
 template<class T_>

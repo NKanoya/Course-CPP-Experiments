@@ -20,24 +20,24 @@ struct CartItem {
 class Purchase {
 public:
     struct PurchasedItem {
-        std::string m_itemID;
-        std::string m_itemName;
-        unsigned int m_count;
-        Price m_unitPrice;
-        Price m_sumPrice;
-        Price m_realPrice;
+        std::string ID;
+        std::string name;
+        Price unitPrice;
+        unsigned int count;
+        Price sumPrice;
+        Price realPrice;
 
-        PurchasedItem(std::string itemID, std::string itemName, unsigned int count,
-                      const Price& unitPrice, const Price& sumPrice,
-                      const Price& finalPrice)
-            : m_itemID(std::move(itemID)), m_itemName(std::move(itemName)), m_count(count),
-              m_unitPrice(unitPrice), m_sumPrice(sumPrice), m_realPrice(finalPrice) {}
+        PurchasedItem(std::string itemID, std::string itemName, const Price& unitPrice,
+                      unsigned int count, const Price& sumPrice,
+                      const Price& realPrice)
+            : ID(std::move(itemID)), name(std::move(itemName)), count(count),
+              unitPrice(unitPrice), sumPrice(sumPrice), realPrice(realPrice) {}
     };
 
     using PurchaseTime = std::chrono::system_clock::time_point;
 protected:
     PurchaseTime m_time;
-    std::string m_purchaseID;
+    std::string m_ID;   // purchase ID
     std::string m_customerID;
     std::vector<PurchasedItem> m_purchasedItems;
     Price m_discount;
@@ -45,9 +45,15 @@ protected:
 
 public:
     Purchase(Customer* customer, std::vector<CartItem> items, PurchaseTime time);
+    Purchase(PurchaseTime time, std::string ID, std::string customerId)
+        : m_time(time), m_ID(std::move(ID)), m_customerID(std::move(customerId)) {}
 
     const std::vector<PurchasedItem>& getPurchaseItem() const {
         return m_purchasedItems;
+    }
+
+    const std::string& getID() const {
+        return m_ID;
     }
 
     std::vector<PurchasedItem>& setPurchaseItem() {
@@ -58,8 +64,8 @@ public:
         return m_time;
     }
 
-    const std::string& getPurchaseID() const {
-        return m_purchaseID;
+    const std::string& getCustomerID() const {
+        return m_customerID;
     }
 
     const Price getDiscount() const {

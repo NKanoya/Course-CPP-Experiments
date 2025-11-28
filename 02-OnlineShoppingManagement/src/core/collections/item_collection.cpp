@@ -12,7 +12,7 @@ bool ItemCollection::importFromCSV() {
     try {
         rapidcsv::Document csv(m_csvPath, rapidcsv::LabelParams(0, -1));
 
-        if (csv.GetColumnCount() < 4) {
+        if (csv.GetColumnCount() < propertyCount) {
             return false;
         }
         std::size_t rowCount = csv.GetRowCount();
@@ -23,7 +23,6 @@ bool ItemCollection::importFromCSV() {
         m_vec.clear();
         m_vec.reserve(rowCount);
 
-        // 逐行读取，便于错误处理
         for (std::size_t i = 0; i < rowCount; ++i) {
             try {
                 auto id = csv.GetCell<std::string>(0, i);

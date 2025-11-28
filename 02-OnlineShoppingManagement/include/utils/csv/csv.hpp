@@ -14,11 +14,11 @@ namespace rapidcsv {
     struct Converter<Price> {
         Converter(const rapidcsv::ConverterParams& param) {}
 
-        void ToVal(const std::string& str, AmountOfMoney& val) {
+        void ToVal(const std::string& str, AmountOfMoney& val) const {
             val = Price::convertFromString(str);
         }
 
-        static std::string ToStr(const Price& item, std::string str) {
+        void ToStr(const Price& item, std::string& str) const {
             str = item.format();
         }
     };

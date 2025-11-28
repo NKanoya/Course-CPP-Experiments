@@ -9,7 +9,11 @@
 #include <string>
 
 class AmountOfMoney {
-    int64_t m_amount;
+public:
+    using ValueType = int32_t;
+    using DoubleType = long double;
+private:
+    ValueType m_amount;
 public:
     AmountOfMoney() : m_amount(0) {}
     AmountOfMoney(int64_t amount) : m_amount(amount * 100) {}
@@ -20,10 +24,10 @@ public:
     AmountOfMoney(uint16_t amount) : m_amount(amount * 100) {}
     AmountOfMoney(uint8_t amount) : m_amount(amount * 100) {}
 
-    AmountOfMoney(double amount) : m_amount(amount * 100) {}
+    AmountOfMoney(long double amount) : m_amount(amount * 100) {}
     AmountOfMoney(const AmountOfMoney& oth) : m_amount(oth.m_amount) {}
 
-    double getDoubleAmount() {
+    DoubleType getDoubleAmount() {
         return m_amount / 100.0;
     }
 

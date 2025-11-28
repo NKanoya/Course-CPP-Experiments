@@ -14,6 +14,8 @@ using MemberPointer = std::shared_ptr<Member>;
 
 class MemberCollection : public Collection<MemberPointer> {
 public:
+    MemberCollection(std::string csvPath) : Collection<MemberPointer>(std::move(csvPath)) {}
+
     virtual bool exportToCSV() override;
     virtual bool importFromCSV() override;
 };

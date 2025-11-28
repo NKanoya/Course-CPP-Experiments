@@ -4,28 +4,30 @@
 
 #include "core/amount_of_money.hpp"
 #include <string>
+#include <iostream>
 
 AmountOfMoney AmountOfMoney::convertFromString(const std::string& str) {
-    AmountOfMoney amount{1};
+    AmountOfMoney amount{0};
     if(str.empty())
         return 0;
 
     size_t dotPos = str.find('.');
 
     if(dotPos == std::string::npos) {
-        return std::stoll(str) * 100;  // 无小数点，整数金额
+        return std::stoll(str) * 100;
     }
 
     std::string integerStr = str.substr(0, dotPos);
     std::string decimalStr = str.substr(dotPos + 1);
 
-    amount.m_amount *= std::stoll(integerStr) * 100;
+    amount.m_amount += std::stoll(integerStr) * 100;
 
     if(decimalStr.length() == 1) {
         amount.m_amount += (decimalStr[0] - '0') * 10;
     } else if(decimalStr.length() >= 2) {
         amount.m_amount += (decimalStr[0] - '0') * 10 + (decimalStr[1] - '0');
     }
+
 
     return amount;
 }

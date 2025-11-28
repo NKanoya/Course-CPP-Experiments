@@ -1,6 +1,7 @@
 add_library(collections
         item_collection.cpp
         member_collection.cpp
+        purchase_collection.cpp
 )
 
 target_include_directories(collections

@@ -18,13 +18,13 @@ Purchase::Purchase(Customer *customer, std::vector<CartItem> items, Purchase::Pu
         Price totalPriceOfItem = cartItem.count * item.getPrice();
 
         m_purchasedItems.emplace_back(item.getID(), item.getName(),
-                                       cartItem.count, item.getPrice(),
+                                      item.getPrice(), cartItem.count,
                                       totalPriceOfItem,
                                       customer -> realPrice(totalPriceOfItem));
     }
 
     if(!m_purchasedItems.empty()) {
-        m_purchaseID = "";
+        m_ID = "";
         return;
     }
 
@@ -35,7 +35,7 @@ Purchase::Purchase(Customer *customer, std::vector<CartItem> items, Purchase::Pu
                                       m_purchasedItems.end(),
                                       Price{0},
                                       [](const Price& price, const PurchasedItem& item) -> Price {
-                                          return price + item.m_realPrice;
+                                          return price + item.realPrice;
                                       });
 
     m_totalPrice = totalPrice;
