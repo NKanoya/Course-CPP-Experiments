@@ -14,6 +14,9 @@ namespace test {
     // collection
     void test_purchase_collection();
 
+    // stream
+    void test_streams();
+
 }
 
 

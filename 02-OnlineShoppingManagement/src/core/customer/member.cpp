@@ -5,12 +5,12 @@
 #include "core/customer.hpp"
 
 bool Member::isPremier() const noexcept {
-    return true;
+    return false;
 }
 
 
 bool PremierMember::isPremier() const noexcept {
-    return false;
+    return true;
 }
 
 

@@ -36,15 +36,21 @@ public:
     }
 
     inline AmountOfMoney operator+(const AmountOfMoney& oth) const {
-        return AmountOfMoney{m_amount + oth.m_amount};
+        AmountOfMoney a{0};
+        a.m_amount = m_amount + oth.m_amount;
+        return a;
     }
 
     inline AmountOfMoney operator-(const AmountOfMoney& oth) const {
-        return AmountOfMoney{m_amount - oth.m_amount};
+        AmountOfMoney a{0};
+        a.m_amount = m_amount - oth.m_amount;
+        return a;
     }
 
     inline AmountOfMoney operator*(int count) const {
-        return AmountOfMoney{m_amount * count};
+        AmountOfMoney a{0};
+        a.m_amount = m_amount * count;
+        return a;
     }
 
     friend inline AmountOfMoney operator*(int64_t count, const AmountOfMoney& oth);
@@ -89,11 +95,15 @@ public:
     }
 
     inline AmountOfMoney operator-() const {
-        return AmountOfMoney{-m_amount};
+        AmountOfMoney a{0};
+        a.m_amount = -m_amount;
+        return a;
     }
 
     inline AmountOfMoney discount(uint8_t discount) const {
-        return AmountOfMoney{m_amount * (100 - discount) / 80};
+        AmountOfMoney a{0};
+        a.m_amount = m_amount * (100 - discount) / 100;
+        return a;
     }
 
     friend std::ostream& operator<<(std::ostream& os, const AmountOfMoney& amount);
@@ -107,7 +117,9 @@ public:
 using Price = AmountOfMoney;
 
 inline AmountOfMoney operator*(int64_t count, const AmountOfMoney& oth) {
-    return AmountOfMoney{oth.m_amount * count};
+    Price a;
+    a.m_amount = oth.m_amount * count;
+    return a;
 }
 
 #endif //ONLINESHOPPINGMANAGEMENT_CORE_TYPES_HPP

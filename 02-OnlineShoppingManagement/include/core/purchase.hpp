@@ -15,6 +15,8 @@
 struct CartItem {
     Item* item;
     unsigned int count;
+
+    CartItem(Item* item, unsigned int count) : item(item), count(count) {}
 };
 
 class Purchase {

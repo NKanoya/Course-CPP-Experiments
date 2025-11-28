@@ -82,7 +82,7 @@ bool PurchaseCollection::importFromCSV() {
                 );
                 current -> setPurchaseItem().emplace_back(item);
 
-                current -> setDiscount() += currentSumPrice - currentRealPrice;
+                current -> setDiscount() += (currentSumPrice - currentRealPrice);
                 current -> setTotalPrice() += currentRealPrice;
 
                 if(id != lastId) {

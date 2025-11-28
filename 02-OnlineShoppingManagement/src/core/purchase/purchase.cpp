@@ -3,9 +3,10 @@
 //
 
 #include "core/purchase.hpp"
+#include "utils/random/random_id.hpp"
 #include <numeric>
 
-Purchase::Purchase(Customer *customer, const std::vector<CartItem>& items, Purchase::PurchaseTime time) {
+Purchase::Purchase(Customer *customer, const std::vector<CartItem>& items, Purchase::PurchaseTime time) : m_time(time) {
     for(auto& cartItem: items) {
         auto item = *(cartItem.item);
         if(cartItem.count > item.getStock()) {
@@ -23,22 +24,30 @@ Purchase::Purchase(Customer *customer, const std::vector<CartItem>& items, Purch
                                       customer -> realPrice(totalPriceOfItem));
     }
 
-    if(!m_purchasedItems.empty()) {
+    if(m_purchasedItems.empty()) {
         m_ID = "";
         return;
     }
 
     m_time = time;
+    m_ID = randomId("PRCH");
     m_customerID = customer -> getID();
 
-    auto totalPrice = std::accumulate(m_purchasedItems.begin(),
+    auto totalRealPrice = std::accumulate(m_purchasedItems.begin(),
                                       m_purchasedItems.end(),
                                       Price{0},
                                       [](const Price& price, const PurchasedItem& item) -> Price {
                                           return price + item.realPrice;
                                       });
 
-    m_totalPrice = totalPrice;
-    m_discount = m_totalPrice - totalPrice;
+    auto totalSumPrice = std::accumulate(m_purchasedItems.begin(),
+                                      m_purchasedItems.end(),
+                                      Price{0},
+                                      [](const Price& price, const PurchasedItem& item) -> Price {
+                                          return price + item.sumPrice;
+                                      });
+
+    m_totalPrice = totalRealPrice;
+    m_discount = totalSumPrice - m_totalPrice;
 }
 

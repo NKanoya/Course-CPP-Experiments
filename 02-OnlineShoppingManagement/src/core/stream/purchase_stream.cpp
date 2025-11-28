@@ -22,7 +22,7 @@ std::ostream& operator<<(std::ostream& os, const Purchase& purchase) {
         os << item.name << " x " << item.count << "    ";
         os << "<Unit Price> " << item.unitPrice << "    ";
         os << "<Total> " << item.realPrice << " ";
-        os << "(Discount: " << item.sumPrice - item.realPrice << ")\n";
+        os << "(Discount: " << (item.sumPrice - item.realPrice) << ")\n";
     }
 
     return os;

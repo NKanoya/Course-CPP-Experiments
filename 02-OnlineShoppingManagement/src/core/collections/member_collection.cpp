@@ -61,8 +61,9 @@ bool MemberCollection::exportToCSV() {
 
         csv.SetColumnName(0, "ID");
         csv.SetColumnName(1, "Name");
-        csv.SetColumnName(2, "Price");
-        csv.SetColumnName(3, "Stock");
+        csv.SetColumnName(2, "Phone");
+        csv.SetColumnName(3, "Points");
+        csv.SetColumnName(4, "Secondary ID");
 
         std::vector<std::string> ids;
         std::vector<std::string> names;
